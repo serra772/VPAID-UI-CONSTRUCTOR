@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VPAID Constructor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        /* ---- SIDEBAR ---- */
+        #sidebar {
+            width: 360px;
+            min-width: 360px;
+            background: #16213e;
+            border-right: 1px solid #0f3460;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 16px 20px;
+            background: #0f3460;
+            border-bottom: 1px solid #1a1a5e;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            color: #e94560;
+            font-weight: 700;
+        }
+
+        .section {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .section h3 {
+            font-size: 0.85rem;
+            color: #e94560;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.82rem;
+            margin-top: 8px;
+            color: #aaa;
+        }
+
+        label.check-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+            color: #ccc;
+            margin-top: 4px;
+        }
+
+        label.check-label input[type="checkbox"] {
+            accent-color: #e94560;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1px solid #0f3460;
+            border-radius: 4px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            font-size: 0.85rem;
+            margin-top: 3px;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 7px 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .btn-primary {
+            background: #e94560;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #c73652;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+        }
+
+        .btn-danger:hover {
+            background: #bd2130;
+        }
+
+        .btn-add {
+            background: #0f3460;
+            color: #e0e0e0;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .btn-add:hover {
+            background: #1a4a8a;
+        }
+
+        .component-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+        }
+
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .component-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #e94560;
+        }
+
+        .coord-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 4px;
+        }
+
+        .coord-grid input {
+            text-align: center;
+            padding: 5px 2px;
+            font-size: 0.8rem;
+        }
+
+        .coord-grid small {
+            display: block;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #666;
+        }
+
+        /* ---- PREVIEW AREA ---- */
+        #preview-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0d0d1a;
+            position: relative;
+        }
+
+        #toolbar {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        #canvas-wrapper {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            background: #000;
+            box-shadow: 0 0 40px rgba(233, 69, 96, 0.15);
+            transform-origin: center;
+            overflow: hidden;
+        }
+
+        .canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* ---- DRAG BOXES (Blue borders) ---- */
+        .drag-box {
+            position: absolute;
+            border: 2px solid #4a9eff;
+            cursor: move;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #aaa;
+            overflow: hidden;
+            user-select: none;
+            box-sizing: border-box;
+            background: rgba(74, 158, 255, 0.05);
+            z-index: 10;
+        }
+
+        .drag-box:hover {
+            background: rgba(74, 158, 255, 0.1);
+        }
+
+        .drag-box.selected {
+            box-shadow: 0 0 0 2px #4a9eff, 0 0 12px rgba(74, 158, 255, 0.3);
+            z-index: 100;
+        }
+
+        .drag-box .comp-content {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Resize handles on all borders */
+        .resize-handle {
+            position: absolute;
+            z-index: 1000;
+            background: transparent;
+        }
+
+        .resize-handle.rh-right {
+            top: 0;
+            right: -4px;
+            width: 8px;
+            height: 100%;
+            cursor: ew-resize;
+        }
+
+        .resize-handle.rh-bottom {
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            cursor: ns-resize;
+        }
+
+        .resize-handle.rh-corner {
+            right: -5px;
+            bottom: -5px;
+            width: 10px;
+            height: 10px;
+            cursor: nwse-resize;
+            background: #4a9eff;
+            border-radius: 2px;
+        }
+
+        /* Preview Mode */
+        .preview-mode .drag-box {
+            border: none !important;
+            background: transparent !important;
+            cursor: default !important;
+        }
+
+        .preview-mode .resize-handle {
+            display: none !important;
+        }
+
+        .preview-mode .drag-box.selected {
+            box-shadow: none !important;
+        }
+
+        #zoom-label {
+            position: absolute;
+            bottom: 10px;
+            right: 14px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #888;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h2>VPAID Constructor</h2>
+        </div>
+
+        <!-- Components Checkboxes -->
+        <div class="section">
+            <h3>Components</h3>
+            <label class="check-label"><input type="checkbox" id="check-videoWindow"
+                    onchange="toggleComponent('videoWindow', this.checked)"> Video Window</label>
+            <label class="check-label"><input type="checkbox" id="check-productCarousel"
+                    onchange="toggleComponent('productCarousel', this.checked)"> Product Carousel</label>
+            <label class="check-label"><input type="checkbox" id="check-legalText"
+                    onchange="toggleComponent('legalText', this.checked)"> Legal Text</label>
+            <button class="btn-add" onclick="addComponent('ctaButton'); renderAll(); syncCheckboxes();"
+                style="margin-top:6px;">+ Add CTA Button</button>
+        </div>
+
+        <!-- General Settings -->
+        <div class="section">
+            <h3>General Settings</h3>
+            <label>Project Name</label>
+            <input type="text" id="project-name" value="MyVPAID">
+
+            <label>vpaid.js Production URL</label>
+            <input type="text" id="vpaid-url" placeholder="https://cdn.example.com/vpaid.js">
+
+            <label>Click-Through URL</label>
+            <input type="text" id="click-url" value="https://example.com">
+
+            <label>Ad Duration (sec)</label>
+            <input type="number" id="ad-duration" value="30" min="1">
+
+            <label>Background Color</label>
+            <input type="color" id="bg-color" value="#000000" oninput="updateBackground()">
+            <label>Background Image URL</label>
+            <input type="text" id="bg-url" placeholder="https://cdn.example.com/bg.png" oninput="updateBackground()">
+        </div>
+
+        <!-- Tracking -->
+        <div class="section">
+            <h3>Tracking</h3>
+            <label>Impression Tracker</label>
+            <input type="text" id="imp-tracker" placeholder="https://...">
+            <label>Click Tracker</label>
+            <input type="text" id="click-tracker" placeholder="https://...">
+            <label>Custom Tracking URL Template</label>
+            <input type="text" id="tracking-template" placeholder="https://...?event=[EVENT_ID]">
+            <label>Error Tracker</label>
+            <input type="text" id="err-tracker" placeholder="https://...">
+        </div>
+
+        <!-- Component List -->
+        <div class="section">
+            <h3>Component Settings</h3>
+            <div id="components-list"></div>
+        </div>
+    </div>
+
+    <div id="preview-area">
+        <div id="toolbar">
+            <button class="btn-primary" id="preview-btn" onclick="togglePreview()"
+                style="background:#2196F3">Preview</button>
+            <button class="btn-primary" onclick="toggleImportPanel()" style="background:#ff9800" id="load-btn">Load
+                Project (vpaid.js)</button>
+            <button class="btn-success" onclick="generateProject()">Generate Project</button>
+        </div>
+        <div id="import-panel"
+            style="display:none;position:absolute;top:50px;right:16px;z-index:200;background:#1e2a3a;border:1px solid #4e9eff;border-radius:8px;padding:12px;min-width:420px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                <label style="color:#8ab4f8;font-size:13px;white-space:nowrap;">vpaid.js URL:</label>
+                <input type="text" id="import-url" placeholder="https://... (vpaid.js URL)"
+                    style="flex:1;padding:6px 8px;background:#0d1b2a;border:1px solid #4e9eff;border-radius:4px;color:#fff;font-size:12px;">
+                <button class="btn-primary" onclick="importFromUrl()"
+                    style="background:#4e9eff;padding:6px 14px;font-size:12px;">Load</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <span style="color:#8ab4f8;font-size:13px;">or</span>
+                <button class="btn-primary" onclick="document.getElementById('import-file').click()"
+                    style="background:#ff9800;padding:6px 14px;font-size:12px;">Upload vpaid.js</button>
+                <input type="file" id="import-file" accept=".js" style="display:none" onchange="importFromFile(this)">
+                <span id="import-status" style="color:#aaa;font-size:11px;"></span>
+            </div>
+        </div>
+        <div id="canvas-wrapper">
+            <div class="canvas-bg" id="canvas-bg-layer"></div>
+            <div id="canvas-container"></div>
+        </div>
+        <div id="zoom-label">85% fit</div>
+    </div>
+
+    <script>
+        /* ===== STATE ===== */
+        let projectConfig = {
+            settings: {}, assets: {}, components: []
+        };
+        let components = [];
+        let selectedComponentId = null;
+
+        /* ===== INIT ===== */
+        function init() {
+            window.addEventListener('resize', autoScale);
+            autoScale();
+        }
+
+        function autoScale() {
+            const wrapper = document.getElementById('canvas-wrapper');
+            const area = document.getElementById('preview-area');
+            const scaleW = (area.offsetWidth * 0.85) / 1280;
+            const scaleH = (area.offsetHeight * 0.85) / 720;
+            const scale = Math.min(scaleW, scaleH);
+            wrapper.style.transform = `scale(${scale})`;
+            document.getElementById('zoom-label').textContent = `${Math.round(scale * 100)}% fit`;
+        }
+
+        /* ===== BACKGROUND ===== */
+        function updateBackground() {
+            const url = document.getElementById('bg-url').value;
+            const color = document.getElementById('bg-color').value || '#000000';
+            const layer = document.getElementById('canvas-bg-layer');
+            if (url) {
+                layer.style.backgroundImage = `url("${url}")`;
+                layer.style.backgroundColor = color;
+                layer.style.opacity = '1';
+            } else {
+                layer.style.backgroundImage = 'none';
+                layer.style.backgroundColor = color;
+                layer.style.opacity = '1';
+            }
+        }
+
+        /* ===== COMPONENT LOGIC ===== */
+        let _compIdCounter = 0;
+        let carouselSlideIndex = 0;
+
+        function changeSlide(direction) {
+            const carousel = components.find(c => c.type === 'productCarousel');
+            if (!carousel) return;
+            const count = Math.max(1, (carousel.props.images || []).length);
+            carouselSlideIndex += direction;
+            if (carouselSlideIndex >= count) carouselSlideIndex = 0;
+            if (carouselSlideIndex < 0) carouselSlideIndex = count - 1;
+            renderCanvas();
+        }
+
+        function addComponent(type) {
+            const id = 'c' + (++_compIdCounter) + '_' + Date.now();
+            const defaults = {
+                videoWindow: { rect: { x: 39, y: 115, w: 715, h: 403 }, props: { videoUrl: '', videoClickUrl: '', autoplayDelayMs: 10000 } },
+                productCarousel: { rect: { x: 800, y: 50, w: 440, h: 620 }, props: { images: [''], dotImages: [''], clickUrls: [''], slideInterval: 5 } },
+                carouselNav: { rect: { x: 760, y: 50, w: 30, h: 620 }, props: { orientation: 'vertical', prevArrowImg: '', nextArrowImg: '', activeDotBorderImg: '', dotColor: '#ffffff', dotActiveColor: '#e94560', dotSize: 8, dotGap: 4, arrowGap: 8, borderDiameter: 0, borderOffsetX: 0, borderOffsetY: 0, arrowColor: '#ffffff', arrowBg: 'rgba(0,0,0,0.5)' } },
+                ctaButton: { rect: { x: 500, y: 600, w: 250, h: 50 }, props: { text: 'Learn More', url: '', bgColor: '#e94560', bgImage: '', textColor: '#ffffff', fontSize: '16px', borderRadius: '8px' } },
+                legalText: { rect: { x: 10, y: 690, w: 400, h: 22 }, props: { text: '', style: { color: '#ffffff', fontSize: '10px', fontFamily: 'Arial' } } }
+            };
+            const def = defaults[type] || { rect: { x: 100, y: 100, w: 200, h: 100 }, props: {} };
+            components.push({ id, type, rect: { ...def.rect }, props: JSON.parse(JSON.stringify(def.props)) });
+            renderAll();
+            selectComponent(id);
+        }
+
+        function toggleComponent(type, checked) {
+            if (checked) {
+                if (!components.find(c => c.type === type)) addComponent(type);
+                // Auto-add nav when carousel is enabled
+                if (type === 'productCarousel') {
+                    if (!components.find(c => c.type === 'carouselNav')) addComponent('carouselNav');
+                }
+            } else {
+                components = components.filter(c => c.type !== type);
+                // Auto-remove nav when carousel is removed
+                if (type === 'productCarousel') {
+                    components = components.filter(c => c.type !== 'carouselNav');
+                }
+                renderAll();
+            }
+            syncCheckboxes();
+        }
+
+        function syncCheckboxes() {
+            ['videoWindow', 'productCarousel', 'legalText'].forEach(t => {
+                const cb = document.getElementById(`check-${t}`);
+                if (cb) cb.checked = components.some(c => c.type === t);
+            });
+        }
+
+        function removeComponent(id) {
+            components = components.filter(c => c.id !== id);
+            renderAll();
+            syncCheckboxes();
+        }
+
+        function selectComponent(id) {
+            selectedComponentId = id;
+            renderCanvas();
+        }
+
+        function updateComp(id, path, value) {
+            const c = components.find(x => x.id === id);
+            if (!c) return;
+            const keys = path.split('.');
+            let obj = c;
+            for (let i = 0; i < keys.length - 1; i++) {
+                if (!obj[keys[i]]) obj[keys[i]] = {};
+                obj = obj[keys[i]];
+            }
+            const last = keys[keys.length - 1];
+            if (['x', 'y', 'w', 'h'].includes(last) || last.toLowerCase().endsWith('offsetx') || last.toLowerCase().endsWith('offsety')) {
+                let v = parseInt(value, 10); if (isNaN(v)) v = 0;
+                if (last === 'x') v = Math.max(0, Math.min(1280 - c.rect.w, v));
+                if (last === 'y') v = Math.max(0, Math.min(720 - c.rect.h, v));
+                if (last === 'w') v = Math.max(10, Math.min(1280 - c.rect.x, v));
+                if (last === 'h') v = Math.max(10, Math.min(720 - c.rect.y, v));
+                obj[last] = v;
+            } else {
+                obj[last] = value;
+            }
+            renderAll();
+        }
+
+        function nudgeBorderOffset(id, dx, dy) {
+            const c = components.find(x => x.id === id);
+            if (!c) return;
+            c.props.borderOffsetX = (parseInt(c.props.borderOffsetX, 10) || 0) + dx;
+            c.props.borderOffsetY = (parseInt(c.props.borderOffsetY, 10) || 0) + dy;
+            renderAll();
+        }
+
+        /* ===== RENDER SIDEBAR ===== */
+        function renderAll() {
+            renderComponentsList();
+            renderCanvas();
+        }
+
+        function renderComponentsList() {
+            const list = document.getElementById('components-list');
+            list.innerHTML = '';
+            components.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'component-item';
+                div.innerHTML = `
+            <div class="component-header">
+                <span class="component-title">${getTypeName(c.type)}</span>
+                <button class="btn-danger" onclick="removeComponent('${c.id}');syncCheckboxes()">✕</button>
+            </div>
+            <div class="coord-grid">
+                <div><small>X</small><input type="number" value="${c.rect.x}" onchange="updateComp('${c.id}','rect.x',this.value)"></div>
+                <div><small>Y</small><input type="number" value="${c.rect.y}" onchange="updateComp('${c.id}','rect.y',this.value)"></div>
+                <div><small>W</small><input type="number" value="${c.rect.w}" onchange="updateComp('${c.id}','rect.w',this.value)"></div>
+                <div><small>H</small><input type="number" value="${c.rect.h}" onchange="updateComp('${c.id}','rect.h',this.value)"></div>
+            </div>
+            ${renderPropsFields(c)}
+        `;
+                list.appendChild(div);
+            });
+        }
+
+        function getTypeName(t) {
+            return { videoWindow: 'Video Window', productCarousel: 'Product Carousel', carouselNav: '◀●▶ Carousel Nav', ctaButton: 'CTA Button', legalText: 'Legal Text' }[t] || t;
+        }
+
+        function renderPropsFields(c) {
+            const id = c.id;
+            if (c.type === 'videoWindow') {
+                return `
+            <label>Video URL</label>
+            <input type="text" value="${c.props.videoUrl || ''}" placeholder="https://...mp4 / .webm / .ogg" oninput="updateComp('${id}','props.videoUrl',this.value)">
+            <label>Video Click URL</label>
+            <input type="text" value="${c.props.videoClickUrl || ''}" placeholder="Click-through for video" oninput="updateComp('${id}','props.videoClickUrl',this.value)">
+            <label>Autoplay Delay (ms)</label>
+            <input type="number" value="${c.props.autoplayDelayMs || 10000}" min="0" step="500" oninput="updateComp('${id}','props.autoplayDelayMs',parseInt(this.value)||0)">`;
+            }
+            if (c.type === 'productCarousel') {
+                if (!c.props.dotImages) c.props.dotImages = [];
+                if (!c.props.clickUrls) c.props.clickUrls = [];
+                while (c.props.dotImages.length < (c.props.images || []).length) c.props.dotImages.push('');
+                while (c.props.clickUrls.length < (c.props.images || []).length) c.props.clickUrls.push('');
+                let imgs = (c.props.images || []).map((url, idx) => `
+            <div style="margin-top:6px;border-left:2px solid #4a9eff;padding-left:6px;">
+                <div style="display:flex;gap:4px;margin-top:2px">
+                    <input type="text" value="${url}" placeholder="Card image URL #${idx + 1}" oninput="updateCarouselImg('${id}',${idx},this.value)" style="flex:1">
+                    <button class="btn-danger" onclick="removeCarouselImg('${id}',${idx})">✕</button>
+                </div>
+                <input type="text" value="${c.props.dotImages[idx] || ''}" placeholder="Dot image URL #${idx + 1}" oninput="updateDotImg('${id}',${idx},this.value)" style="margin-top:2px;font-size:0.78rem;">
+                <input type="text" value="${c.props.clickUrls[idx] || ''}" placeholder="Click URL #${idx + 1}" oninput="updateClickUrl('${id}',${idx},this.value)" style="margin-top:2px;font-size:0.78rem;">
+            </div>`).join('');
+                return `
+            <label>Cards (Images, Dots, Links)</label>${imgs}
+            <button class="btn-add" onclick="addCarouselImg('${id}')">+ Add Card</button>
+            <label>Slide Interval (sec)</label>
+            <input type="number" value="${c.props.slideInterval || 5}" min="1" onchange="updateComp('${id}','props.slideInterval',this.value)">`;
+            }
+            if (c.type === 'carouselNav') {
+                return `
+            <label>Orientation</label>
+            <select onchange="updateComp('${id}','props.orientation',this.value)">
+                <option value="vertical" ${c.props.orientation === 'vertical' ? 'selected' : ''}>Vertical</option>
+                <option value="horizontal" ${c.props.orientation === 'horizontal' ? 'selected' : ''}>Horizontal</option>
+            </select>
+            <label>Prev Arrow Image</label>
+            <input type="text" value="${c.props.prevArrowImg || ''}" placeholder="https://...arrow-prev.png" oninput="updateComp('${id}','props.prevArrowImg',this.value)">
+            <label>Next Arrow Image</label>
+            <input type="text" value="${c.props.nextArrowImg || ''}" placeholder="https://...arrow-next.png" oninput="updateComp('${id}','props.nextArrowImg',this.value)">
+            <label>Active Dot Border Image</label>
+            <input type="text" value="${c.props.activeDotBorderImg || ''}" placeholder="https://...border.png" oninput="updateComp('${id}','props.activeDotBorderImg',this.value)">
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <div><label>Arrow Color</label><input type="color" value="${c.props.arrowColor || '#ffffff'}" oninput="updateComp('${id}','props.arrowColor',this.value)"></div>
+                <div><label>Arrow BG</label><input type="color" value="${c.props.arrowBg || '#000000'}" oninput="updateComp('${id}','props.arrowBg',this.value)"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <div><label>Dot Color</label><input type="color" value="${c.props.dotColor || '#ffffff'}" oninput="updateComp('${id}','props.dotColor',this.value)"></div>
+                <div><label>Active</label><input type="color" value="${c.props.dotActiveColor || '#e94560'}" oninput="updateComp('${id}','props.dotActiveColor',this.value)"></div>
+                <div style="flex:1"><label>Dot Size</label><input type="number" value="${c.props.dotSize || 8}" min="4" max="60" onchange="updateComp('${id}','props.dotSize',this.value)"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <div style="flex:1"><label>Dot Gap</label><input type="number" value="${c.props.dotGap ?? 4}" min="0" max="60" onchange="updateComp('${id}','props.dotGap',this.value)"></div>
+                <div style="flex:1"><label>Arrow Gap</label><input type="number" value="${c.props.arrowGap ?? 8}" min="0" max="60" onchange="updateComp('${id}','props.arrowGap',this.value)"></div>
+                <div style="flex:1"><label>Border ⌀</label><input type="number" value="${c.props.borderDiameter || 0}" min="0" max="100" onchange="updateComp('${id}','props.borderDiameter',this.value)" title="Diameter of the active dot border ring (0 = auto)"></div>
+            </div>
+            <div style="margin-top:6px">
+                <label>Border Offset</label>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:4px">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                        <button onclick="nudgeBorderOffset('${id}',0,-1)" style="width:24px;height:24px;padding:0;font-size:12px;cursor:pointer;border:1px solid #555;background:#2a2a3e;color:#fff;border-radius:4px;">▲</button>
+                        <div style="display:flex;gap:2px">
+                            <button onclick="nudgeBorderOffset('${id}',-1,0)" style="width:24px;height:24px;padding:0;font-size:12px;cursor:pointer;border:1px solid #555;background:#2a2a3e;color:#fff;border-radius:4px;">◀</button>
+                            <button onclick="nudgeBorderOffset('${id}',1,0)" style="width:24px;height:24px;padding:0;font-size:12px;cursor:pointer;border:1px solid #555;background:#2a2a3e;color:#fff;border-radius:4px;">▶</button>
+                        </div>
+                        <button onclick="nudgeBorderOffset('${id}',0,1)" style="width:24px;height:24px;padding:0;font-size:12px;cursor:pointer;border:1px solid #555;background:#2a2a3e;color:#fff;border-radius:4px;">▼</button>
+                    </div>
+                    <div style="display:flex;gap:4px;background:rgba(0,0,0,0.2);padding:2px 4px;border-radius:4px;">
+                        <div style="display:flex;align-items:center;gap:2px;"><small style="color:#888">X</small><input type="number" value="${c.props.borderOffsetX || 0}" style="width:45px;background:transparent;border:none;color:#fff;font-size:11px;padding:0;" onchange="updateComp('${id}','props.borderOffsetX',this.value)"></div>
+                        <div style="display:flex;align-items:center;gap:2px;"><small style="color:#888">Y</small><input type="number" value="${c.props.borderOffsetY || 0}" style="width:45px;background:transparent;border:none;color:#fff;font-size:11px;padding:0;" onchange="updateComp('${id}','props.borderOffsetY',this.value)"></div>
+                    </div>
+                    <button onclick="updateComp('${id}','props.borderOffsetX',0); updateComp('${id}','props.borderOffsetY',0);" style="margin-left:auto;padding:2px 8px;font-size:11px;cursor:pointer;border:1px solid #555;background:#2a2a3e;color:#aaa;border-radius:4px;">Reset</button>
+                </div>
+            </div>`;
+            }
+            if (c.type === 'ctaButton') {
+                return `
+            <label>Button Text</label>
+            <input type="text" value="${c.props.text || ''}" oninput="updateComp('${id}','props.text',this.value)">
+            <label>URL</label>
+            <input type="text" value="${c.props.url || ''}" oninput="updateComp('${id}','props.url',this.value)">
+            <label>BG Image URL</label>
+            <input type="text" value="${c.props.bgImage || ''}" placeholder="https://...button-bg.png" oninput="updateComp('${id}','props.bgImage',this.value)">
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <div><label>BG Color</label><input type="color" value="${c.props.bgColor || '#e94560'}" oninput="updateComp('${id}','props.bgColor',this.value)"></div>
+                <div><label>Text</label><input type="color" value="${c.props.textColor || '#ffffff'}" oninput="updateComp('${id}','props.textColor',this.value)"></div>
+                <div style="flex:1"><label>Size</label><input type="text" value="${c.props.fontSize || '16px'}" oninput="updateComp('${id}','props.fontSize',this.value)"></div>
+                <div style="flex:1"><label>Radius</label><input type="text" value="${c.props.borderRadius || '8px'}" oninput="updateComp('${id}','props.borderRadius',this.value)"></div>
+            </div>`;
+            }
+            if (c.type === 'legalText') {
+                return `
+            <label>Text</label>
+            <textarea oninput="updateComp('${id}','props.text',this.value)">${c.props.text || ''}</textarea>
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <div><label>Color</label><input type="color" value="${c.props.style?.color || '#ffffff'}" oninput="updateComp('${id}','props.style.color',this.value)"></div>
+                <div style="flex:1"><label>Font Size</label><input type="text" value="${c.props.style?.fontSize || '10px'}" oninput="updateComp('${id}','props.style.fontSize',this.value)"></div>
+            </div>`;
+            }
+
+            return '';
+        }
+
+        /* Carousel helpers */
+        function addCarouselImg(compId) {
+            const c = components.find(x => x.id === compId);
+            if (c) {
+                c.props.images.push('');
+                if (!c.props.dotImages) c.props.dotImages = [];
+                c.props.dotImages.push('');
+                if (!c.props.clickUrls) c.props.clickUrls = [];
+                c.props.clickUrls.push('');
+                renderAll();
+            }
+        }
+        function removeCarouselImg(compId, idx) {
+            const c = components.find(x => x.id === compId);
+            if (c && c.props.images.length > 1) {
+                c.props.images.splice(idx, 1);
+                if (c.props.dotImages) c.props.dotImages.splice(idx, 1);
+                if (c.props.clickUrls) c.props.clickUrls.splice(idx, 1);
+                renderAll();
+            }
+        }
+        function updateCarouselImg(compId, idx, val) {
+            const c = components.find(x => x.id === compId);
+            if (c) { c.props.images[idx] = val; renderCanvas(); }
+        }
+        function updateDotImg(compId, idx, val) {
+            const c = components.find(x => x.id === compId);
+            if (c) {
+                if (!c.props.dotImages) c.props.dotImages = [];
+                c.props.dotImages[idx] = val;
+                renderCanvas();
+            }
+        }
+        function updateClickUrl(compId, idx, val) {
+            const c = components.find(x => x.id === compId);
+            if (c) {
+                if (!c.props.clickUrls) c.props.clickUrls = [];
+                c.props.clickUrls[idx] = val;
+                renderCanvas(); // Needed if the preview starts responding to clicks, though right now preview intercepts it.
+            }
+        }
+
+        /* ===== RENDER CANVAS ===== */
+        function renderCanvas() {
+            const container = document.getElementById('canvas-container');
+            const existingIds = new Set();
+            components.forEach(c => {
+                existingIds.add(c.id);
+                let el = document.getElementById(`comp-${c.id}`);
+                let contentEl;
+                if (!el) {
+                    el = document.createElement('div');
+                    el.id = `comp-${c.id}`;
+                    el.className = 'drag-box';
+                    el.onmousedown = e => startDrag(e, c.id);
+                    el.ondblclick = e => startInlineEdit(e, c.id);
+                    contentEl = document.createElement('div');
+                    contentEl.className = 'comp-content';
+                    el.appendChild(contentEl);
+                    // Resize handles
+                    ['rh-right', 'rh-bottom', 'rh-corner'].forEach(cls => {
+                        const h = document.createElement('div');
+                        h.className = 'resize-handle ' + cls;
+                        h.onmousedown = e => startResize(e, c.id, cls);
+                        el.appendChild(h);
+                    });
+                    container.appendChild(el);
+                } else {
+                    contentEl = el.querySelector('.comp-content');
+                }
+                el.classList.toggle('selected', selectedComponentId === c.id);
+                el.style.left = c.rect.x + 'px';
+                el.style.top = c.rect.y + 'px';
+                el.style.width = c.rect.w + 'px';
+                el.style.height = c.rect.h + 'px';
+                if (c.type === 'carouselNav') el.style.zIndex = '15';
+                renderBoxContent(c, contentEl);
+            });
+            // Cleanup removed
+            Array.from(container.children).forEach(child => {
+                const cid = child.id.replace('comp-', '');
+                if (cid && !existingIds.has(cid)) container.removeChild(child);
+            });
+        }
+
+        function renderBoxContent(c, el) {
+            if (c.type === 'videoWindow') {
+                const url = c.props.videoUrl;
+                let vid = el.querySelector('video');
+                if (url) {
+                    if (!vid) {
+                        el.innerHTML = '';
+                        vid = document.createElement('video');
+                        vid.style.cssText = `width:100%;height:100%;object-fit:cover`;
+                        vid.autoplay = true; vid.muted = true; vid.loop = true; vid.playsInline = true;
+                        // Sound toggle
+                        const btn = document.createElement('div');
+                        btn.className = 'sound-toggle';
+                        btn.style.cssText = 'position:absolute;bottom:6px;right:6px;width:24px;height:24px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;pointer-events:auto;color:#fff;font-size:14px;';
+                        btn.textContent = '🔇';
+                        btn.onclick = e => { e.stopPropagation(); vid.muted = !vid.muted; btn.textContent = vid.muted ? '🔇' : '🔊'; };
+                        el.appendChild(vid);
+                        el.appendChild(btn);
+                    }
+                    vid.style.objectFit = 'cover';
+                    if (vid.getAttribute('src') !== url) vid.src = url;
+                } else {
+                    if (!el.querySelector('.placeholder-label')) {
+                        el.innerHTML = '<div class="placeholder-label" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#666">Video Window</div>';
+                    }
+                }
+            } else if (c.type === 'productCarousel') {
+                const imgs = (c.props.images || []).filter(u => u);
+                el.innerHTML = '';
+                const idx = Math.min(carouselSlideIndex, Math.max(0, imgs.length - 1));
+                if (imgs.length > 0 && imgs[idx]) {
+                    el.style.backgroundImage = `url("${imgs[idx]}")`;
+                    el.style.backgroundSize = 'cover'; el.style.backgroundPosition = 'center';
+                } else {
+                    el.style.backgroundImage = 'none';
+                    el.style.background = 'rgba(74,158,255,0.08)';
+                }
+                const lbl = document.createElement('div');
+                lbl.style.cssText = 'position:absolute;bottom:2px;left:4px;background:rgba(0,0,0,0.6);color:#fff;font-size:10px;padding:2px 6px;border-radius:3px;';
+                lbl.textContent = `Carousel (${idx + 1}/${(c.props.images || []).length})`;
+                el.appendChild(lbl);
+            } else if (c.type === 'carouselNav') {
+                el.innerHTML = '';
+                const carousel = components.find(x => x.type === 'productCarousel');
+                const count = carousel ? Math.max(1, (carousel.props.images || []).length) : 1;
+                const dotImages = carousel ? (carousel.props.dotImages || []) : [];
+                const dotSize = parseInt(c.props.dotSize, 10) || 8;
+                const isVertical = (c.props.orientation || 'vertical') === 'vertical';
+                const activeIdx = Math.min(carouselSlideIndex, Math.max(0, count - 1));
+                // Helper: block mousedown from reaching startDrag (which calls preventDefault and kills click)
+                const blockDrag = el => { el.onmousedown = e => { e.stopPropagation(); }; };
+
+                const wrap = document.createElement('div');
+                const baseThickness = 30;
+                const scale = isVertical ? (c.rect.w / baseThickness) : (c.rect.h / baseThickness);
+                const wPct = (100 / scale).toFixed(4);
+                const hPct = (100 / scale).toFixed(4);
+                wrap.style.cssText = `width:${wPct}%;height:${hPct}%;display:flex;align-items:center;justify-content:center;gap:${parseInt(c.props.dotGap, 10) || 4}px;flex-direction:${isVertical ? 'column' : 'row'};transform:scale(${scale});transform-origin:top left;position:relative;`;
+
+                // Common arrow style
+                const arrowStyle = `width:24px;height:24px;position:absolute;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;`;
+                const prevPos = isVertical ? `top:0;left:50%;transform:translateX(-50%);` : `left:0;top:50%;transform:translateY(-50%);`;
+                const nextPos = isVertical ? `bottom:0;left:50%;transform:translateX(-50%);` : `right:0;top:50%;transform:translateY(-50%);`;
+
+                // Prev arrow
+                const prevArr = document.createElement('div');
+                prevArr.style.cssText = arrowStyle + prevPos;
+                if (c.props.prevArrowImg) {
+                    const prevImg = document.createElement('img');
+                    prevImg.src = c.props.prevArrowImg;
+                    prevImg.style.cssText = 'width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;';
+                    prevArr.appendChild(prevImg);
+                } else {
+                    prevArr.style.background = c.props.arrowBg || 'rgba(0,0,0,0.5)';
+                    prevArr.style.borderRadius = '50%';
+                    prevArr.style.color = c.props.arrowColor || '#fff';
+                    prevArr.style.fontSize = '12px';
+                    prevArr.textContent = isVertical ? '▲' : '◀';
+                }
+                blockDrag(prevArr);
+                prevArr.onclick = e => { e.stopPropagation(); changeSlide(-1); };
+                wrap.appendChild(prevArr);
+
+                // Dots
+                const dotsWrap = document.createElement('div');
+                const dotGap = parseInt(c.props.dotGap, 10) ?? Math.round(dotSize / 2);
+                dotsWrap.style.cssText = `display:flex;align-items:center;justify-content:center;gap:${dotGap}px;flex-direction:${isVertical ? 'column' : 'row'};`;
+
+                // ... dots loop ... (keeping logic same but optimized slightly if needed)
+                const customBorderD = parseInt(c.props.borderDiameter, 10) || 0;
+                const borderSize = customBorderD > 0 ? customBorderD : (dotSize + Math.max(8, Math.round(dotSize * 0.6)));
+                for (let i = 0; i < count; i++) {
+                    const isActive = i === activeIdx;
+                    const dotImgUrl = dotImages[i] || '';
+                    const dotWrapper = document.createElement('div');
+                    dotWrapper.style.cssText = `position:relative;width:${dotSize}px;height:${dotSize}px;flex-shrink:0;transition:all 0.2s;cursor:pointer;pointer-events:auto;overflow:visible;`;
+
+                    const bOffX = parseInt(c.props.borderOffsetX, 10) || 0;
+                    const bOffY = parseInt(c.props.borderOffsetY, 10) || 0;
+                    if (isActive) {
+                        if (c.props.activeDotBorderImg) {
+                            const borderEl = document.createElement('img');
+                            borderEl.src = c.props.activeDotBorderImg;
+                            borderEl.style.cssText = `position:absolute;top:calc(50% + ${bOffY}px);left:calc(50% + ${bOffX}px);transform:translate(-50%,-50%);width:${borderSize}px;height:${borderSize}px;object-fit:contain;z-index:0;pointer-events:none;`;
+                            dotWrapper.appendChild(borderEl);
+                        } else {
+                            const borderRing = document.createElement('div');
+                            borderRing.style.cssText = `position:absolute;top:calc(50% + ${bOffY}px);left:calc(50% + ${bOffX}px);transform:translate(-50%,-50%);width:${borderSize}px;height:${borderSize}px;border-radius:50%;border:2px solid ${c.props.dotActiveColor || '#e94560'};box-sizing:border-box;z-index:0;pointer-events:none;`;
+                            dotWrapper.appendChild(borderRing);
+                        }
+                    }
+
+                    if (dotImgUrl) {
+                        const dImg = document.createElement('img');
+                        dImg.src = dotImgUrl;
+                        dImg.style.cssText = `position:relative;width:100%;height:100%;object-fit:contain;z-index:1;opacity:${isActive ? 1 : 0.5};pointer-events:none;display:block;`;
+                        dotWrapper.appendChild(dImg);
+                    } else {
+                        const dCircle = document.createElement('div');
+                        const color = isActive ? (c.props.dotActiveColor || '#e94560') : (c.props.dotColor || '#ffffff');
+                        dCircle.style.cssText = `position:relative;width:100%;height:100%;border-radius:50%;background:${color};opacity:${isActive ? 1 : 0.5};z-index:1;pointer-events:none;`;
+                        dotWrapper.appendChild(dCircle);
+                    }
+
+                    blockDrag(dotWrapper);
+                    dotWrapper.onclick = ((idx) => (e) => { e.stopPropagation(); carouselSlideIndex = idx; renderCanvas(); })(i);
+                    dotsWrap.appendChild(dotWrapper);
+                }
+                wrap.appendChild(dotsWrap);
+
+                // Next arrow
+                const nextArr = document.createElement('div');
+                nextArr.style.cssText = arrowStyle + nextPos;
+                if (c.props.nextArrowImg) {
+                    const nextImg = document.createElement('img');
+                    nextImg.src = c.props.nextArrowImg;
+                    nextImg.style.cssText = 'width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;';
+                    nextArr.appendChild(nextImg);
+                } else {
+                    nextArr.style.background = c.props.arrowBg || 'rgba(0,0,0,0.5)';
+                    nextArr.style.borderRadius = '50%';
+                    nextArr.style.color = c.props.arrowColor || '#fff';
+                    nextArr.style.fontSize = '12px';
+                    nextArr.textContent = isVertical ? '▼' : '▶';
+                }
+                blockDrag(nextArr);
+                nextArr.onclick = e => { e.stopPropagation(); changeSlide(1); };
+                wrap.appendChild(nextArr);
+
+                el.appendChild(wrap);
+            } else if (c.type === 'ctaButton') {
+                el.innerHTML = '';
+                const btn = document.createElement('div');
+                const bgStyle = c.props.bgImage ? `background:url("${c.props.bgImage}") center/cover no-repeat` : `background:${c.props.bgColor || '#e94560'}`;
+                btn.style.cssText = `width:100%;height:100%;display:flex;align-items:center;justify-content:center;${bgStyle};color:${c.props.textColor || '#fff'};font-size:${c.props.fontSize || '16px'};border-radius:${c.props.borderRadius || '8px'};font-weight:600;overflow:hidden;`;
+                btn.textContent = (c.props.bgImage ? '' : (c.props.text || ''));
+                el.appendChild(btn);
+            } else if (c.type === 'legalText') {
+                el.innerHTML = '';
+                const txt = document.createElement('div');
+                txt.style.cssText = `width:100%;height:100%;display:flex;align-items:center;color:${c.props.style?.color || '#fff'};font-size:${c.props.style?.fontSize || '10px'};font-family:${c.props.style?.fontFamily || 'Arial'};cursor:text;`;
+                txt.textContent = c.props.text || 'Legal Text';
+                txt.title = 'Double-click to edit';
+                el.appendChild(txt);
+            }
+        }
+
+        /* ===== DRAG & RESIZE ===== */
+        let dragState = null;
+
+        function startInlineEdit(e, id) {
+            const c = components.find(x => x.id === id);
+            if (!c || c.type !== 'legalText') return;
+            e.stopPropagation(); e.preventDefault();
+            selectComponent(id);
+
+            const el = document.getElementById(`comp-${id}`);
+            const contentEl = el.querySelector('.comp-content');
+            contentEl.innerHTML = '';
+
+            const input = document.createElement('div');
+            input.contentEditable = 'true';
+            input.textContent = c.props.text || '';
+            input.style.cssText = `width:100%;height:100%;display:flex;align-items:center;color:${c.props.style?.color || '#fff'};font-size:${c.props.style?.fontSize || '10px'};font-family:${c.props.style?.fontFamily || 'Arial'};outline:none;border:1px dashed #4e9eff;box-sizing:border-box;padding:2px 4px;cursor:text;background:rgba(0,0,0,0.3);overflow:hidden;white-space:nowrap;`;
+            contentEl.appendChild(input);
+
+            // Prevent drag while editing
+            el.onmousedown = e2 => { e2.stopPropagation(); };
+
+            input.focus();
+            // Select all text
+            const range = document.createRange();
+            range.selectNodeContents(input);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            function finishEdit() {
+                const newText = input.textContent.trim();
+                c.props.text = newText;
+                el.onmousedown = e2 => startDrag(e2, c.id);
+                renderAll();
+            }
+
+            input.onblur = finishEdit;
+            input.onkeydown = function (ev) {
+                if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
+                if (ev.key === 'Escape') { input.blur(); }
+                ev.stopPropagation();
+            };
+            // Prevent renderAll from overwriting during typing
+            input.oninput = function (ev) { ev.stopPropagation(); };
+        }
+
+        function startDrag(e, id) {
+            if (e.target.classList.contains('resize-handle')) return;
+            e.stopPropagation(); e.preventDefault();
+            selectComponent(id);
+            const c = components.find(x => x.id === id);
+            dragState = { mode: 'move', comp: c, startX: e.clientX, startY: e.clientY, origRect: { ...c.rect } };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        function startResize(e, id, handleCls) {
+            e.stopPropagation(); e.preventDefault();
+            selectComponent(id);
+            const c = components.find(x => x.id === id);
+            dragState = { mode: 'resize', handle: handleCls, comp: c, startX: e.clientX, startY: e.clientY, origRect: { ...c.rect } };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        function getScale() {
+            const area = document.getElementById('preview-area');
+            return Math.min((area.offsetWidth * 0.85) / 1280, (area.offsetHeight * 0.85) / 720);
+        }
+
+        function onMouseMove(e) {
+            if (!dragState) return;
+            const scale = getScale();
+            const dx = (e.clientX - dragState.startX) / scale;
+            const dy = (e.clientY - dragState.startY) / scale;
+            const c = dragState.comp;
+            const o = dragState.origRect;
+            if (dragState.mode === 'move') {
+                c.rect.x = Math.max(0, Math.min(1280 - c.rect.w, Math.round(o.x + dx)));
+                c.rect.y = Math.max(0, Math.min(720 - c.rect.h, Math.round(o.y + dy)));
+            } else {
+                if (dragState.handle.includes('right') || dragState.handle.includes('corner')) {
+                    c.rect.w = Math.max(10, Math.min(1280 - c.rect.x, Math.round(o.w + dx)));
+                }
+                if (dragState.handle.includes('bottom') || dragState.handle.includes('corner')) {
+                    c.rect.h = Math.max(10, Math.min(720 - c.rect.y, Math.round(o.h + dy)));
+                }
+            }
+            renderCanvas();
+            renderComponentsList();
+        }
+
+        function onMouseUp() {
+            dragState = null;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        /* ===== PREVIEW MODE ===== */
+        function togglePreview() {
+            const container = document.getElementById('canvas-container');
+            const btn = document.getElementById('preview-btn');
+            const isPreview = container.classList.toggle('preview-mode');
+            btn.textContent = isPreview ? 'Edit Mode' : 'Preview';
+            btn.style.background = isPreview ? '#4CAF50' : '#2196F3';
+        }
+
+        /* ===== BUILD PROJECT CONFIG ===== */
+        function buildConfig() {
+            const bgUrl = document.getElementById('bg-url').value;
+            const bgColor = document.getElementById('bg-color').value || '#000000';
+            const videoComp = components.find(c => c.type === 'videoWindow');
+            return {
+                adWidth: 1280, adHeight: 720,
+                settings: {
+                    clickThroughUrl: document.getElementById('click-url').value,
+                    adDuration: parseInt(document.getElementById('ad-duration').value, 10) || 30,
+                    impressionTracker: document.getElementById('imp-tracker').value,
+                    clickTracker: document.getElementById('click-tracker').value,
+                    trackingTemplate: document.getElementById('tracking-template').value,
+                    errorTracker: document.getElementById('err-tracker').value
+                },
+                assets: {
+                    background: bgUrl,
+                    bgColor: bgColor,
+                    videoUrl: videoComp ? videoComp.props.videoUrl : ''
+                },
+                components: components.map(c => ({ type: c.type, rect: { ...c.rect }, props: JSON.parse(JSON.stringify(c.props)) }))
+            };
+        }
+
+        /* ===== GENERATE VPAID.JS ===== */
+        function generateVpaidJs(config) {
+            const cfgJson = JSON.stringify(config, null, 2);
+            return `/**
+ * Generated VPAID 2.0 Creative
+ * Project: ${document.getElementById('project-name').value}
+ * Generated: ${new Date().toISOString()}
+ */
+(function() {
+  "use strict";
+  var CONFIG = ${cfgJson};
+
+  /* ---- Event System ---- */
+  function EventBus() {
+    this._handlers = {};
+  }
+  EventBus.prototype.subscribe = function(fn, event) { (this._handlers[event] = this._handlers[event] || []).push(fn); };
+  EventBus.prototype.unsubscribe = function(fn, event) { this._handlers[event] = (this._handlers[event] || []).filter(function(h){return h !== fn;}); };
+  EventBus.prototype.emit = function(event) { var args = [].slice.call(arguments, 1); (this._handlers[event] || []).forEach(function(fn){ try{fn.apply(null, args);}catch(e){console.error(e);} }); };
+
+  var bus = new EventBus();
+  var _carouselGoTo = null;
+  var _hasExternalNav = CONFIG.components.some(function(c){ return c.type === "carouselNav"; });
+
+  /* ---- Scaler ---- */
+  function createScaler(slot, w, h) {
+    var scale = Math.min(w / 1280, h / 720);
+    var top = Math.max(0, Math.floor((h - 720 * scale) / 2));
+    var left = Math.max(0, Math.floor((w - 1280 * scale) / 2));
+    var wrapper = document.createElement("div");
+    wrapper.style.cssText = "width:1280px;height:720px;position:absolute;top:" + top + "px;left:" + left + "px;transform:scale(" + scale + ");transform-origin:top left;overflow:hidden;font-family:sans-serif;";
+    slot.appendChild(wrapper);
+    return { wrapper: wrapper, scale: scale, update: function(nw, nh) {
+      scale = Math.min(nw / 1280, nh / 720);
+      top = Math.max(0, Math.floor((nh - 720 * scale) / 2));
+      left = Math.max(0, Math.floor((nw - 1280 * scale) / 2));
+      wrapper.style.transform = "scale(" + scale + ")";
+      wrapper.style.top = top + "px"; wrapper.style.left = left + "px";
+    }};
+  }
+
+  /* ---- Render Components ---- */
+  function renderCreative(root, videoSlot) {
+    root.style.position = "relative";
+    root.style.width = "1280px";
+    root.style.height = "720px";
+    root.style.background = CONFIG.assets.bgColor || "#000";
+
+    // Background click → click-through
+    var clickUrl = CONFIG.settings.clickThroughUrl;
+    if (clickUrl) {
+      root.style.cursor = "pointer";
+      root.onclick = function(e) {
+        if (e.target === root || e.target === bg) {
+          window.open(clickUrl, "_blank");
+          bus.emit("AdClickThru", clickUrl, null, true);
+        }
+      };
+    }
+
+    // Background image
+    if (CONFIG.assets.background) {
+      var bg = document.createElement("div");
+      var bgPE = clickUrl ? "auto" : "none";
+      bg.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('" + CONFIG.assets.background + "');background-size:cover;background-position:center;pointer-events:" + bgPE + ";z-index:0;";
+      root.appendChild(bg);
+    }
+
+
+
+    CONFIG.components.forEach(function(comp) {
+      var el = document.createElement("div");
+      el.style.cssText = "position:absolute;left:" + comp.rect.x + "px;top:" + comp.rect.y + "px;width:" + comp.rect.w + "px;height:" + comp.rect.h + "px;z-index:10;box-sizing:border-box;overflow:hidden;";
+
+      if (comp.type === "videoWindow") {
+        renderVideo(el, comp, videoSlot);
+      } else if (comp.type === "productCarousel") {
+        renderCarousel(el, comp);
+      } else if (comp.type === "carouselNav") {
+        el.style.zIndex = "15";
+        renderCarouselNav(el, comp);
+      } else if (comp.type === "ctaButton") {
+        renderCTA(el, comp);
+      } else if (comp.type === "legalText") {
+        renderLegal(el, comp);
+      }
+      root.appendChild(el);
+    });
+  }
+
+  function renderVideo(el, comp, videoSlot) {
+    var url = comp.props.videoUrl || CONFIG.assets.videoUrl;
+    if (!url) return;
+    el.style.zIndex = "5";
+    el.style.cursor = "pointer";
+    var videoClickUrl = comp.props.videoClickUrl || CONFIG.settings.clickThroughUrl;
+    el.onclick = function(e) { e.stopPropagation(); if (videoClickUrl) window.open(videoClickUrl, "_blank"); bus.emit("AdClickThru", videoClickUrl, null, true); };
+
+    // Use provided videoSlot or create inline
+    var vid = videoSlot || document.createElement("video");
+    vid.src = url;
+    vid.muted = true; vid.loop = true; vid.playsInline = true;
+    vid.setAttribute("playsinline","");
+    vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+    el.appendChild(vid);
+
+    // Autoplay after delay
+    var autoDelay = parseInt(comp.props.autoplayDelayMs, 10);
+    if (isNaN(autoDelay)) autoDelay = 10000;
+    if (autoDelay <= 0) {
+      vid.autoplay = true;
+    } else {
+      vid.autoplay = false;
+      setTimeout(function() { vid.play().catch(function(){}); if (typeof playBtn !== 'undefined') playBtn.innerHTML = pauseIcon(); }, autoDelay);
+    }
+
+    // --- Play/Pause button (bottom-left) ---
+    var playBtn = document.createElement("div");
+    playBtn.style.cssText = "position:absolute;bottom:8px;left:8px;width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;";
+    playBtn.innerHTML = (autoDelay <= 0) ? pauseIcon() : playIcon();
+    playBtn.onclick = function(e) {
+      e.stopPropagation();
+      if (vid.paused) {
+        vid.play();
+        playBtn.innerHTML = pauseIcon();
+        bus.emit("AdPlaying");
+      } else {
+        vid.pause();
+        playBtn.innerHTML = playIcon();
+        bus.emit("AdPaused");
+      }
+    };
+    el.appendChild(playBtn);
+
+    // --- Volume controls container (bottom-right) ---
+    var volWrap = document.createElement("div");
+    volWrap.style.cssText = "position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:4px;z-index:20;";
+    el.appendChild(volWrap);
+
+    // Volume slider panel (hidden by default)
+    var volPanel = document.createElement("div");
+    volPanel.style.cssText = "display:none;align-items:center;background:rgba(0,0,0,0.7);border-radius:14px;padding:4px 8px;height:28px;";
+    volWrap.appendChild(volPanel);
+
+    var volSlider = document.createElement("input");
+    volSlider.type = "range"; volSlider.min = "0"; volSlider.max = "100"; volSlider.value = "0";
+    volSlider.style.cssText = "width:70px;height:4px;cursor:pointer;accent-color:#4e9eff;-webkit-appearance:auto;";
+    volSlider.onclick = function(e) { e.stopPropagation(); };
+    volSlider.oninput = function(e) {
+      e.stopPropagation();
+      var v = parseInt(volSlider.value, 10) / 100;
+      vid.volume = v;
+      vid.muted = (v === 0);
+      soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
+      bus.emit("AdVolumeChange");
+    };
+    volPanel.appendChild(volSlider);
+
+    // Volume toggle button (shows/hides slider)
+    var volToggle = document.createElement("div");
+    volToggle.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
+    volToggle.innerHTML = volIcon();
+    volToggle.onclick = function(e) {
+      e.stopPropagation();
+      var isHidden = volPanel.style.display === "none";
+      volPanel.style.display = isHidden ? "flex" : "none";
+      volSlider.value = String(Math.round(vid.volume * 100));
+    };
+    volWrap.appendChild(volToggle);
+
+    // Sound mute/unmute button
+    var soundBtn = document.createElement("div");
+    soundBtn.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
+    soundBtn.innerHTML = muteIcon();
+    soundBtn.onclick = function(e) {
+      e.stopPropagation();
+      vid.muted = !vid.muted;
+      if (!vid.muted && vid.volume === 0) { vid.volume = 0.5; }
+      soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
+      volSlider.value = String(Math.round((vid.muted ? 0 : vid.volume) * 100));
+      bus.emit("AdVolumeChange");
+    };
+    volWrap.appendChild(soundBtn);
+
+    vid.onloadedmetadata = function() { bus.emit("AdDurationChange"); };
+    vid.ontimeupdate = function() {
+      var pct = vid.currentTime / vid.duration;
+      if (pct >= 0.25 && !vid._q1) { vid._q1 = true; bus.emit("AdVideoFirstQuartile"); }
+      if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
+      if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
+    };
+    vid.onended = function() { bus.emit("AdVideoComplete"); };
+  }
+
+  function muteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-16.73-16.73zM12 4L9.91 6.09 12 8.18V4z"/></svg>'; }
+  function unmuteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>'; }
+  function playIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M8 5v14l11-7z"/></svg>'; }
+  function pauseIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'; }
+  function volIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>'; }
+
+  function renderCarousel(el, comp) {
+    var imgs = (comp.props.images || []).filter(function(u){return u;});
+    if (!imgs.length) return;
+    el.style.position = "relative";
+    el.style.overflow = "hidden";
+    var track = document.createElement("div");
+    track.style.cssText = "display:flex;flex-direction:column;transition:transform 0.4s ease;width:100%;height:100%;";
+    var idx = 0;
+    imgs.forEach(function(src, i) {
+      var slide = document.createElement("div");
+      slide.style.cssText = "width:100%;min-height:100%;flex-shrink:0;background-image:url('" + src + "');background-size:cover;background-position:center;cursor:pointer;";
+      slide.onclick = (function(idx) {
+        return function(e) {
+          e.stopPropagation();
+          var arr = comp.props.clickUrls || [];
+          var u = arr[idx] || CONFIG.settings.clickThroughUrl;
+          if (u) window.open(u, "_blank");
+          bus.emit("AdClickThru", u, null, true);
+        };
+      })(i);
+      track.appendChild(slide);
+    });
+    el.appendChild(track);
+
+    if (imgs.length > 1) {
+      // Built-in dots (only if no external carouselNav)
+      if (!_hasExternalNav && comp.props.showDots !== false) {
+        var dots = document.createElement("div");
+        dots.style.cssText = "position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:20;";
+        imgs.forEach(function(_,i) {
+          var d = document.createElement("div");
+          d.style.cssText = "width:8px;height:8px;border-radius:50%;background:" + (i===0?"#fff":"rgba(255,255,255,0.4)") + ";cursor:pointer;transition:background 0.2s;";
+          d.onclick = function(e) { e.stopPropagation(); goTo(i); };
+          dots.appendChild(d);
+        });
+        el.appendChild(dots);
+      }
+
+      // Built-in arrows (only if no external carouselNav)
+      if (!_hasExternalNav && comp.props.showArrows !== false) {
+        var mkArrow = function(dir) {
+          var a = document.createElement("div");
+          a.style.cssText = "position:absolute;" + (dir==="prev"?"top:8px;":"bottom:8px;") + "left:50%;transform:translateX(-50%)" + (dir==="prev"?" rotate(0deg)":" rotate(180deg)") + ";width:28px;height:28px;background:rgba(0,0,0,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;color:#fff;font-size:14px;";
+          a.innerHTML = "&#9650;";
+          a.onclick = function(e) { e.stopPropagation(); goTo(idx + (dir==="prev"?-1:1)); };
+          return a;
+        };
+        el.appendChild(mkArrow("prev"));
+        el.appendChild(mkArrow("next"));
+      }
+
+      // Auto rotate
+      var interval = (parseInt(comp.props.slideInterval,10) || 5) * 1000;
+      var timer = setInterval(function() { goTo(idx + 1); }, interval);
+    }
+
+    function goTo(i) {
+      idx = ((i % imgs.length) + imgs.length) % imgs.length;
+      track.style.transform = "translateY(-" + (idx * 100) + "%)";
+      // Update external nav dots if present
+      if (_carouselGoTo && _carouselGoTo._updateDots) _carouselGoTo._updateDots(idx);
+      bus.emit("AdInteraction", "carousel:" + idx);
+    }
+
+    // Expose goTo for external nav
+    _carouselGoTo = goTo;
+    _carouselGoTo._getIdx = function() { return idx; };
+    _carouselGoTo._getCount = function() { return imgs.length; };
+  }
+
+  function renderCarouselNav(el, comp) {
+    el.style.overflow = "visible";
+    var p = comp.props;
+    var bOffX = parseInt(p.borderOffsetX, 10) || 0;
+    var bOffY = parseInt(p.borderOffsetY, 10) || 0;
+    var carousel = CONFIG.components.find(function(c){ return c.type === "productCarousel"; });
+    var imgCount = carousel ? Math.max(1, (carousel.props.images || []).filter(function(u){return u;}).length) : 1;
+    var dotImagesArr = carousel ? (carousel.props.dotImages || []) : [];
+
+    var dotSize = parseInt(p.dotSize, 10) || 8;
+    var isVertical = (p.orientation || "vertical") === "vertical";
+
+    var wrap = document.createElement("div");
+    var baseThickness = 30;
+    var scale = isVertical ? (comp.rect.w / baseThickness) : (comp.rect.h / baseThickness);
+    var wPct = (100 / scale).toFixed(4);
+    var hPct = (100 / scale).toFixed(4);
+    wrap.style.cssText = "width:" + wPct + "%;height:" + hPct + "%;display:flex;align-items:center;justify-content:center;gap:" + (parseInt(p.dotGap,10)||4) + "px;flex-direction:" + (isVertical ? "column" : "row") + ";transform:scale(" + scale + ");transform-origin:top left;position:relative;";
+
+    var arrowStyle = "width:24px;height:24px;position:absolute;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;";
+    var prevPos = isVertical ? "top:0;left:50%;transform:translateX(-50%);" : "left:0;top:50%;transform:translateY(-50%);";
+    var nextPos = isVertical ? "bottom:0;left:50%;transform:translateX(-50%);" : "right:0;top:50%;transform:translateY(-50%);";
+
+    // Prev arrow
+    var prevArr = document.createElement("div");
+    prevArr.style.cssText = arrowStyle + prevPos;
+    if (p.prevArrowImg) {
+      var pImg = document.createElement("img");
+      pImg.src = p.prevArrowImg;
+      pImg.style.cssText = "width:100%;height:100%;object-fit:contain;display:block;";
+      prevArr.appendChild(pImg);
+    } else {
+      prevArr.style.background = p.arrowBg || "rgba(0,0,0,0.5)";
+      prevArr.style.borderRadius = "50%";
+      prevArr.style.color = p.arrowColor || "#fff";
+      prevArr.style.fontSize = "12px";
+      prevArr.innerHTML = isVertical ? "&#9650;" : "&#9664;";
+    }
+    prevArr.onclick = function(e) { e.stopPropagation(); if (_carouselGoTo) { var cur = _carouselGoTo._getIdx(); _carouselGoTo(cur - 1); } };
+    wrap.appendChild(prevArr);
+
+    // Dots
+    var dotsWrap = document.createElement("div");
+    var dotGap = parseInt(p.dotGap, 10) || Math.round(dotSize / 2);
+    dotsWrap.style.cssText = "display:flex;align-items:center;justify-content:center;gap:" + dotGap + "px;flex-direction:" + (isVertical ? "column" : "row") + ";";
+    for (var i = 0; i < imgCount; i++) {
+      var isActive = i === 0;
+      var dotImgUrl = dotImagesArr[i] || "";
+      var customBorderD = parseInt(p.borderDiameter, 10) || 0;
+      var borderSize = customBorderD > 0 ? customBorderD : (dotSize + Math.max(8, Math.round(dotSize * 0.6)));
+      var dotWrapper = document.createElement("div");
+      dotWrapper.style.cssText = "position:relative;width:" + dotSize + "px;height:" + dotSize + "px;flex-shrink:0;transition:all 0.2s;cursor:pointer;overflow:visible;";
+      dotWrapper.setAttribute("data-dot-idx", i);
+
+      if (p.activeDotBorderImg) {
+        var borderEl = document.createElement("img");
+        borderEl.src = p.activeDotBorderImg;
+        borderEl.className = "dot-border";
+        borderEl.style.cssText = "position:absolute;top:calc(50% + " + bOffY + "px);left:calc(50% + " + bOffX + "px);transform:translate(-50%,-50%);width:" + borderSize + "px;height:" + borderSize + "px;object-fit:contain;z-index:0;pointer-events:none;display:" + (isActive ? "block" : "none") + ";";
+        dotWrapper.appendChild(borderEl);
+      } else {
+        var borderRing = document.createElement("div");
+        borderRing.className = "dot-border";
+        borderRing.style.cssText = "position:absolute;top:calc(50% + " + bOffY + "px);left:calc(50% + " + bOffX + "px);transform:translate(-50%,-50%);width:" + borderSize + "px;height:" + borderSize + "px;border-radius:50%;border:2px solid " + (p.dotActiveColor || "#e94560") + ";box-sizing:border-box;z-index:0;pointer-events:none;display:" + (isActive ? "block" : "none") + ";";
+        dotWrapper.appendChild(borderRing);
+      }
+
+      if (dotImgUrl) {
+        var dImg = document.createElement("img");
+        dImg.src = dotImgUrl;
+        dImg.className = "dot-content";
+        dImg.style.cssText = "position:relative;width:100%;height:100%;object-fit:contain;z-index:1;opacity:" + (isActive ? 1 : 0.5) + ";display:block;";
+        dotWrapper.appendChild(dImg);
+      } else {
+        var dCircle = document.createElement("div");
+        dCircle.className = "dot-content";
+        dCircle.style.cssText = "position:relative;width:100%;height:100%;border-radius:50%;background:" + (isActive ? (p.dotActiveColor || "#e94560") : (p.dotColor || "#fff")) + ";opacity:" + (isActive ? 1 : 0.5) + ";z-index:1;";
+        dotWrapper.appendChild(dCircle);
+      }
+
+      dotWrapper.onclick = (function(idx) {
+        return function(e) { e.stopPropagation(); if (_carouselGoTo) _carouselGoTo(idx); };
+      })(i);
+      dotsWrap.appendChild(dotWrapper);
+    }
+    wrap.appendChild(dotsWrap);
+
+    // Update dots function
+    _carouselGoTo = _carouselGoTo || function(){};
+    _carouselGoTo._updateDots = function(activeIdx) {
+      var allDotWrappers = dotsWrap.children;
+      for (var j = 0; j < allDotWrappers.length; j++) {
+        var isAct = j === activeIdx;
+        var w = allDotWrappers[j];
+        // Toggle border visibility and re-apply offset position
+        var border = w.querySelector(".dot-border");
+        if (border) {
+          if (isAct) {
+            border.style.display = "block";
+            border.style.top = "calc(50% + " + bOffY + "px)";
+            border.style.left = "calc(50% + " + bOffX + "px)";
+          } else {
+            border.style.display = "none";
+          }
+        }
+        // Update dot content
+        var content = w.querySelector(".dot-content");
+        if (content) {
+          if (content.tagName === "IMG") {
+            content.style.opacity = isAct ? "1" : "0.5";
+          } else {
+            content.style.background = isAct ? (p.dotActiveColor || "#e94560") : (p.dotColor || "#fff");
+            content.style.opacity = isAct ? "1" : "0.5";
+          }
+        }
+      }
+    };
+
+    // Next arrow
+    var nextArr = document.createElement("div");
+    nextArr.style.cssText = arrowStyle + nextPos;
+    if (p.nextArrowImg) {
+      var nImg = document.createElement("img");
+      nImg.src = p.nextArrowImg;
+      nImg.style.cssText = "width:100%;height:100%;object-fit:contain;display:block;";
+      nextArr.appendChild(nImg);
+    } else {
+      nextArr.style.background = p.arrowBg || "rgba(0,0,0,0.5)";
+      nextArr.style.borderRadius = "50%";
+      nextArr.style.color = p.arrowColor || "#fff";
+      nextArr.style.fontSize = "12px";
+      nextArr.innerHTML = isVertical ? "&#9660;" : "&#9654;";
+    }
+    nextArr.onclick = function(e) { e.stopPropagation(); if (_carouselGoTo) { var cur = _carouselGoTo._getIdx(); _carouselGoTo(cur + 1); } };
+    wrap.appendChild(nextArr);
+
+    el.appendChild(wrap);
+  }
+
+  function renderCTA(el, comp) {
+    el.style.cursor = "pointer";
+    el.style.display = "flex"; el.style.alignItems = "center"; el.style.justifyContent = "center";
+    if (comp.props.bgImage) {
+      el.style.background = "url('" + comp.props.bgImage + "') center/cover no-repeat";
+    } else {
+      el.style.background = comp.props.bgColor || "#e94560";
+    }
+    el.style.overflow = "hidden";
+    el.style.color = comp.props.textColor || "#fff";
+    el.style.fontSize = comp.props.fontSize || "16px";
+    el.style.fontWeight = "600";
+    el.style.borderRadius = comp.props.borderRadius || "8px";
+    el.textContent = comp.props.bgImage ? "" : (comp.props.text || "Learn More");
+    el.onclick = function(e) { e.stopPropagation(); var u = comp.props.url || CONFIG.settings.clickThroughUrl; if(u) window.open(u,"_blank"); bus.emit("AdClickThru", u, null, true); };
+  }
+
+  function renderLegal(el, comp) {
+    el.style.display = "flex"; el.style.alignItems = "center";
+    el.style.color = (comp.props.style && comp.props.style.color) || "#fff";
+    el.style.fontSize = (comp.props.style && comp.props.style.fontSize) || "10px";
+    el.style.fontFamily = (comp.props.style && comp.props.style.fontFamily) || "Arial";
+    el.style.pointerEvents = "none";
+    el.textContent = comp.props.text || "";
+  }
+
+  function triggerClick() {
+    var url = CONFIG.settings.clickThroughUrl;
+    if (url) window.open(url, "_blank");
+    bus.emit("AdClickThru", url, null, true);
+  }
+
+  /* ---- Tracking ---- */
+  function firePixel(url) { if(url){ var i = new Image(); i.src = url; } }
+  function fireTracking(eventId) {
+    var tmpl = CONFIG.settings.trackingTemplate;
+    if (tmpl) firePixel(tmpl.replace("[EVENT_ID]", eventId));
+  }
+
+  /* ---- VPAID Interface ---- */
+  var vpaid = {
+    slot: null, videoSlot: null, scaler: null,
+    _width: 0, _height: 0, _started: false, _stopped: false,
+
+    handshakeVersion: function() { return "2.0"; },
+
+    initAd: function(w, h, viewMode, desiredBitrate, creativeData, envVars) {
+      this.slot = envVars.slot;
+      this.videoSlot = envVars.videoSlot;
+      this._width = w; this._height = h;
+
+      this.scaler = createScaler(this.slot, w, h);
+      renderCreative(this.scaler.wrapper, this.videoSlot);
+      bus.emit("AdLoaded");
+    },
+
+    startAd: function() {
+      this._started = true;
+      firePixel(CONFIG.settings.impressionTracker);
+      fireTracking("impression");
+      bus.emit("AdImpression");
+      bus.emit("AdStarted");
+      bus.emit("AdVideoStart");
+    },
+
+    stopAd: function() {
+      if (this._stopped) return;
+      this._stopped = true;
+      fireTracking("close");
+      bus.emit("AdStopped");
+    },
+
+    skipAd: function() { fireTracking("skip"); bus.emit("AdSkipped"); },
+    pauseAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.pause(); bus.emit("AdPaused"); },
+    resumeAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.play(); bus.emit("AdPlaying"); },
+    resizeAd: function(w, h, viewMode) { this._width = w; this._height = h; if(this.scaler) this.scaler.update(w, h); bus.emit("AdSizeChange"); },
+    expandAd: function() { bus.emit("AdExpandedChange"); },
+    collapseAd: function() { bus.emit("AdExpandedChange"); },
+
+    getAdLinear: function() { return true; },
+    getAdWidth: function() { return this._width; },
+    getAdHeight: function() { return this._height; },
+    getAdExpanded: function() { return false; },
+    getAdSkippableState: function() { return true; },
+    getAdRemainingTime: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); return v && v.duration ? v.duration - v.currentTime : -2; },
+    getAdDuration: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); return v && v.duration > 0 ? v.duration : CONFIG.settings.adDuration || -2; },
+    getAdVolume: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); return v ? v.volume : -1; },
+    setAdVolume: function(val) { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v && !isNaN(val)){ v.volume = val; v.muted = val === 0; } bus.emit("AdVolumeChange"); },
+    getAdCompanions: function() { return ""; },
+    getAdIcons: function() { return false; },
+
+    subscribe: function(fn, event) { bus.subscribe(fn, event); },
+    unsubscribe: function(fn, event) { bus.unsubscribe(fn, event); }
+  };
+
+  window.getVPAIDAd = function() { return vpaid; };
+})();
+`;
+        }
+
+        /* ===== GENERATE TEST.HTML ===== */
+        function generateTestHtml() {
+            return `<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>VPAID Test</title></head>
+<body style="margin:0;background:#000">
+<div id="loader" style="font-size:50px;color:#fff;width:1280px;height:720px;position:absolute;top:0;left:0;text-align:center;line-height:720px">LOADING...</div>
+<div id="terminator" style="display:none;font-size:50px;color:#fff;width:1280px;height:720px;position:absolute;top:0;left:0;text-align:center;line-height:720px">CLOSED</div>
+<div id="adSlot" style="width:1280px;height:720px;position:absolute;top:0;left:0;z-index:1"></div>
+<video id="videoSlot" style="width:1280px;height:720px;position:absolute;top:0;left:0"></video>
+<script src="./vpaid.js"><\/script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var vpaid = getVPAIDAd();
+  var adSlot = document.getElementById('adSlot');
+  vpaid.subscribe(function() {
+    document.getElementById('loader').style.display = 'none';
+    vpaid.startAd();
+  }, 'AdLoaded');
+  vpaid.subscribe(function(url, id, playerHandles) {
+    if (playerHandles && url) window.open(url);
+  }, 'AdClickThru');
+  vpaid.subscribe(function() {
+    document.getElementById('terminator').style.display = 'initial';
+    document.getElementById('loader').style.display = 'none';
+  }, 'AdStopped');
+  vpaid.initAd(1280, 720, '', 0, {}, {
+    slot: adSlot, videoSlot: document.getElementById('videoSlot')
+  });
+
+  function onAdResize() {
+    vpaid.resizeAd(adSlot.offsetWidth, adSlot.offsetHeight, 'normal');
+  }
+  new ResizeObserver(onAdResize).observe(adSlot);
+});
+<\/script>
+</body>
+</html>`;
+        }
+
+        /* ===== GENERATE VAST.XML ===== */
+        function generateVastXml(config) {
+            const vpaidUrl = document.getElementById('vpaid-url').value || 'vpaid.js';
+            const impTracker = config.settings.impressionTracker || '';
+            const clickTracker = config.settings.clickTracker || '';
+            const clickThrough = config.settings.clickThroughUrl || '';
+            const dur = config.settings.adDuration || 30;
+            const hh = String(Math.floor(dur / 3600)).padStart(2, '0');
+            const mm = String(Math.floor((dur % 3600) / 60)).padStart(2, '0');
+            const ss = String(dur % 60).padStart(2, '0');
+            const projectName = document.getElementById('project-name').value || 'Linear Video Ad';
+
+            // Sanitize config strings for XML/CDATA
+            const safeErrorUrl = config.settings.errorTracker ? config.settings.errorTracker.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="3.0">
+  <Ad id="5502027">
+    <InLine>
+      <AdSystem version="1.0">VPAID Constructor</AdSystem>
+      <AdTitle>${projectName}</AdTitle>
+      <Description><![CDATA[Generated VPAID Custom Ad]]></Description>
+      <Error><![CDATA[${safeErrorUrl}]]></Error>
+      <Impression><![CDATA[${impTracker}]]></Impression>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <Duration>${hh}:${mm}:${ss}</Duration>
+            <AdParameters xmlEncoded="0"/>
+            <VideoClicks>
+              <ClickThrough><![CDATA[${clickThrough}]]></ClickThrough>
+              <ClickTracking><![CDATA[${clickTracker}]]></ClickTracking>
+            </VideoClicks>
+            <MediaFiles>
+              <MediaFile delivery="progressive" width="16" height="9" apiFramework="VPAID" type="application/javascript">
+                <![CDATA[
+${vpaidUrl}
+                ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>`;
+        }
+
+        /* ===== IMPORT PROJECT ===== */
+        function toggleImportPanel() {
+            const p = document.getElementById('import-panel');
+            p.style.display = p.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function setImportStatus(msg, isError) {
+            const el = document.getElementById('import-status');
+            el.textContent = msg;
+            el.style.color = isError ? '#ff6b6b' : '#66bb6a';
+        }
+
+        // Import from uploaded .js file
+        function importFromFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+            setImportStatus('Reading file...', false);
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                processVpaidJs(e.target.result, file.name.replace(/\.js$/i, ''));
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        // Import from URL
+        async function importFromUrl() {
+            const url = document.getElementById('import-url').value.trim();
+            if (!url) { setImportStatus('Enter a vpaid.js URL', true); return; }
+            setImportStatus('Fetching vpaid.js...', false);
+            try {
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                const text = await resp.text();
+                processVpaidJs(text, 'Imported');
+            } catch (err) {
+                setImportStatus('Fetch error: ' + err.message, true);
+            }
+        }
+
+        // Parse vpaid.js and restore project
+        function processVpaidJs(jsText, fallbackName) {
+            try {
+                // Extract CONFIG object from vpaid.js
+                // Looking for: var CONFIG = { ... };
+                const match = jsText.match(/var\s+CONFIG\s*=\s*(\{[\s\S]*?\});/);
+                if (!match) {
+                    throw new Error('No CONFIG object found in vpaid.js');
+                }
+
+                const configJson = match[1];
+                const config = JSON.parse(configJson);
+
+                // Extract project name from the comment header if possible
+                // Looking for: * Project: [name]
+                let projectName = fallbackName;
+                const nameMatch = jsText.match(/\*\s*Project:\s*(.+)/);
+                if (nameMatch && nameMatch[1]) {
+                    projectName = nameMatch[1].trim();
+                }
+
+                // Restore the project
+                restoreFromConfig(config, projectName, 'vpaid.js');
+                setImportStatus('Loaded! (' + (config.components ? config.components.length : 0) + ' components)', false);
+                document.getElementById('import-panel').style.display = 'none';
+            } catch (err) {
+                setImportStatus('Error: ' + err.message, true);
+                console.error(err);
+            }
+        }
+
+        // Shared restore logic
+        function restoreFromConfig(config, projectName, vpaidUrl) {
+            const s = config.settings || {};
+            document.getElementById('project-name').value = projectName || 'Imported';
+            document.getElementById('vpaid-url').value = vpaidUrl || '';
+            document.getElementById('click-url').value = s.clickThroughUrl || '';
+            document.getElementById('ad-duration').value = s.adDuration || 30;
+            document.getElementById('imp-tracker').value = s.impressionTracker || '';
+            document.getElementById('click-tracker').value = s.clickTracker || '';
+            document.getElementById('tracking-template').value = s.trackingTemplate || '';
+            document.getElementById('err-tracker').value = s.errorTracker || '';
+
+            // Restore background
+            const bgUrl = (config.assets && config.assets.background) || '';
+            const bgColor = (config.assets && config.assets.bgColor) || '#000000';
+            document.getElementById('bg-url').value = bgUrl;
+            document.getElementById('bg-color').value = bgColor;
+            updateBackground();
+
+            // Restore components with fresh IDs
+            components = (config.components || []).map(c => {
+                return {
+                    id: 'c' + (++_compIdCounter) + '_' + Date.now(),
+                    type: c.type,
+                    rect: { ...c.rect },
+                    props: JSON.parse(JSON.stringify(c.props))
+                };
+            });
+
+            carouselSlideIndex = 0;
+            selectedComponentId = components.length > 0 ? components[0].id : null;
+            syncCheckboxes();
+            renderAll();
+        }
+
+        /* ===== GENERATE PROJECT (ZIP) ===== */
+        async function generateProject() {
+            const config = buildConfig();
+            const zip = new JSZip();
+
+            zip.file("vpaid.js", generateVpaidJs(config));
+            zip.file("test.html", generateTestHtml());
+            zip.file("vast.xml", generateVastXml(config));
+
+            const blob = await zip.generateAsync({ type: "blob" });
+            const name = (document.getElementById('project-name').value || 'vpaid_project') + '.zip';
+            saveAs(blob, name);
+        }
+
+        /* ===== BOOT ===== */
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="3.0">
+  <Ad id="5502027">
+    <InLine>
+      <AdSystem version="1.0">VPAID Constructor</AdSystem>
+      <AdTitle>SoltaExample</AdTitle>
+      <Description><![CDATA[Generated VPAID Custom Ad]]></Description>
+      <Error><![CDATA[https://pixels.getshop.tv/vod_da/error?client_id=getshoptv&amp;ad_id=58df9004-30ca-4141-a828-dfe637e18ff1&amp;code=[ERRORCODE]&amp;campaign_name=Solta%20Superfluid%20(%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C%202024)&amp;s-headers=Origin&amp;s-headers=Referer]]></Error>
+      <Impression><![CDATA[]]></Impression>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <Duration>00:00:30</Duration>
+            <AdParameters xmlEncoded="0"/>
+            <VideoClicks>
+              <ClickThrough><![CDATA[https://stellary.ru]]></ClickThrough>
+              <ClickTracking><![CDATA[]]></ClickTracking>
+            </VideoClicks>
+            <MediaFiles>
+              <MediaFile delivery="progressive" width="16" height="9" apiFramework="VPAID" type="application/javascript">
+                <![CDATA[
+https://serra772.github.io/VPAID-UI-CONSTCRUCTOR/vpaid.js
+                ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>
