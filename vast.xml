@@ -19,7 +19,7 @@
             <MediaFiles>
               <MediaFile delivery="progressive" width="16" height="9" apiFramework="VPAID" type="application/javascript">
                 <![CDATA[
-https://serra772.github.io/VPAID-UI-CONSTCRUCTOR/vpaid.js
+https://serra772.github.io/VPAID-UI-CONSTRUCTOR/vpaid.js
                 ]]>
               </MediaFile>
             </MediaFiles>
