@@ -9,7 +9,7 @@
   "adWidth": 1280,
   "adHeight": 720,
   "settings": {
-    "clickThroughUrl": "https://example.comhttps://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+    "clickThroughUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
     "adDuration": 30,
     "impressionTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
     "clickTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
@@ -32,7 +32,7 @@
       },
       "props": {
         "videoUrl": "https://serra772.github.io/VPAID-selector/molped_vid_25.mp4",
-        "videoClickUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+        "videoClickUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
         "autoplayDelayMs": 0,
         "showPlayControl": false,
         "showSoundControl": false
@@ -48,7 +48,7 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
         "bgImage": "https://serra772.github.io/VPAID-selector/molped_frame.png",
         "textColor": "#ffffff",
@@ -66,7 +66,7 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
         "bgImage": "https://serra772.github.io/VPAID-selector/mascot_2.png",
         "textColor": "#ffffff",
@@ -98,11 +98,11 @@
           ""
         ],
         "clickUrls": [
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026"
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026"
         ],
         "slideInterval": 5
       }
@@ -142,7 +142,7 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
         "bgImage": "https://serra772.github.io/VPAID-selector/molped_btn1.png",
         "textColor": "#ffffff",
@@ -260,7 +260,7 @@
     // Use provided videoSlot or create inline
     var vid = videoSlot || document.createElement("video");
     vid.src = url;
-    vid.muted = false; vid.loop = true; vid.playsInline = true;
+    vid.muted = false; vid.playsInline = true;
     vid.setAttribute("playsinline","");
     vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
     el.appendChild(vid);
@@ -360,7 +360,7 @@
       if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
       if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
     };
-    vid.onended = function() { bus.emit("AdVideoComplete"); };
+    vid.onended = function() { bus.emit("AdVideoComplete"); bus.emit("AdStopped"); };
   }
 
   function muteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-16.73-16.73zM12 4L9.91 6.09 12 8.18V4z"/></svg>'; }
