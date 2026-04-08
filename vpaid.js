@@ -206,8 +206,18 @@
     root.style.height = "720px";
     root.style.background = CONFIG.assets.bgColor || "#000";
 
-    // Background click → click-through
     var clickUrl = CONFIG.settings.clickThroughUrl;
+
+    // Background image
+    var bg = null;
+    if (CONFIG.assets.background) {
+      bg = document.createElement("div");
+      var bgPE = clickUrl ? "auto" : "none";
+      bg.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('" + CONFIG.assets.background + "');background-size:cover;background-position:center;pointer-events:" + bgPE + ";z-index:0;";
+      root.appendChild(bg);
+    }
+
+    // Background click → click-through
     if (clickUrl) {
       root.style.cursor = "pointer";
       root.onclick = function(e) {
@@ -216,14 +226,6 @@
           bus.emit("AdClickThru", clickUrl, null, true);
         }
       };
-    }
-
-    // Background image
-    if (CONFIG.assets.background) {
-      var bg = document.createElement("div");
-      var bgPE = clickUrl ? "auto" : "none";
-      bg.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('" + CONFIG.assets.background + "');background-size:cover;background-position:center;pointer-events:" + bgPE + ";z-index:0;";
-      root.appendChild(bg);
     }
 
 
@@ -258,21 +260,29 @@
     el.onclick = function(e) { e.stopPropagation(); if (videoClickUrl) window.open(videoClickUrl, "_blank"); bus.emit("AdClickThru", videoClickUrl, null, true); };
 
     // Use provided videoSlot or create inline
+    var isExternalSlot = !!videoSlot;
     var vid = videoSlot || document.createElement("video");
-    vid.src = url;
-    vid.muted = false; vid.playsInline = true;
-    vid.setAttribute("playsinline","");
-    vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
-    el.appendChild(vid);
+
+    // Guard all property assignments — in prod the videoSlot may be a wrapper without standard HTMLVideoElement API
+    try { vid.src = url; } catch(e) {}
+    try { vid.muted = false; } catch(e) {}
+    try { vid.playsInline = true; } catch(e) {}
+    try { vid.setAttribute("playsinline",""); } catch(e) {}
+    if (vid.style) vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+
+    // Only append if it's our own element (external videoSlot may already be in the DOM)
+    if (!isExternalSlot || !vid.parentNode) {
+      try { el.appendChild(vid); } catch(e) {}
+    }
 
     // Autoplay after delay
     var autoDelay = parseInt(comp.props.autoplayDelayMs, 10);
-    if (isNaN(autoDelay)) autoDelay = 0; // Default to 0 now
+    if (isNaN(autoDelay)) autoDelay = 0;
     if (autoDelay <= 0) {
-      vid.autoplay = true;
+      try { vid.autoplay = true; } catch(e) {}
     } else {
-      vid.autoplay = false;
-      setTimeout(function() { vid.play().catch(function(){}); }, autoDelay);
+      try { vid.autoplay = false; } catch(e) {}
+      setTimeout(function() { if (vid.play) vid.play().catch(function(){}); }, autoDelay);
     }
 
     // --- Play/Pause Control (optional) ---
@@ -283,18 +293,17 @@
       playBtn.onclick = function(e) {
         e.stopPropagation();
         if (vid.paused) {
-          vid.play();
+          if (vid.play) vid.play();
           playBtn.innerHTML = pauseIcon();
           bus.emit("AdPlaying");
         } else {
-          vid.pause();
+          if (vid.pause) vid.pause();
           playBtn.innerHTML = playIcon();
           bus.emit("AdPaused");
         }
       };
       el.appendChild(playBtn);
       
-      // Update the timeout to reference playBtn safely
       if (autoDelay > 0) {
         setTimeout(function() { if (typeof playBtn !== 'undefined') playBtn.innerHTML = pauseIcon(); }, autoDelay);
       }
@@ -302,12 +311,10 @@
 
     // --- Sound Controls (optional) ---
     if (comp.props.showSoundControl) {
-      // --- Volume controls container (bottom-right) ---
       var volWrap = document.createElement("div");
       volWrap.style.cssText = "position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:4px;z-index:20;";
       el.appendChild(volWrap);
 
-      // Volume slider panel (hidden by default)
       var volPanel = document.createElement("div");
       volPanel.style.cssText = "display:none;align-items:center;background:rgba(0,0,0,0.7);border-radius:14px;padding:4px 8px;height:28px;";
       volWrap.appendChild(volPanel);
@@ -319,14 +326,12 @@
       volSlider.oninput = function(e) {
         e.stopPropagation();
         var v = parseInt(volSlider.value, 10) / 100;
-        vid.volume = v;
-        vid.muted = (v === 0);
+        try { vid.volume = v; vid.muted = (v === 0); } catch(ex) {}
         soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
         bus.emit("AdVolumeChange");
       };
       volPanel.appendChild(volSlider);
 
-      // Volume toggle button (shows/hides slider)
       var volToggle = document.createElement("div");
       volToggle.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
       volToggle.innerHTML = volIcon();
@@ -334,33 +339,37 @@
         e.stopPropagation();
         var isHidden = volPanel.style.display === "none";
         volPanel.style.display = isHidden ? "flex" : "none";
-        volSlider.value = String(Math.round(vid.volume * 100));
+        try { volSlider.value = String(Math.round(vid.volume * 100)); } catch(ex) {}
       };
       volWrap.appendChild(volToggle);
 
-      // Sound mute/unmute button
       var soundBtn = document.createElement("div");
       soundBtn.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
       soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
       soundBtn.onclick = function(e) {
         e.stopPropagation();
-        vid.muted = !vid.muted;
-        if (!vid.muted && vid.volume === 0) { vid.volume = 0.5; }
+        try {
+          vid.muted = !vid.muted;
+          if (!vid.muted && vid.volume === 0) { vid.volume = 0.5; }
+        } catch(ex) {}
         soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
-        volSlider.value = String(Math.round((vid.muted ? 0 : vid.volume) * 100));
+        try { volSlider.value = String(Math.round((vid.muted ? 0 : vid.volume) * 100)); } catch(ex) {}
         bus.emit("AdVolumeChange");
       };
       volWrap.appendChild(soundBtn);
     }
 
-    vid.onloadedmetadata = function() { bus.emit("AdDurationChange"); };
-    vid.ontimeupdate = function() {
-      var pct = vid.currentTime / vid.duration;
-      if (pct >= 0.25 && !vid._q1) { vid._q1 = true; bus.emit("AdVideoFirstQuartile"); }
-      if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
-      if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
-    };
-    vid.onended = function() { bus.emit("AdVideoComplete"); bus.emit("AdStopped"); };
+    // Event handlers — use try/catch in case vid doesn't support them
+    try {
+      vid.onloadedmetadata = function() { bus.emit("AdDurationChange"); };
+      vid.ontimeupdate = function() {
+        var pct = vid.currentTime / vid.duration;
+        if (pct >= 0.25 && !vid._q1) { vid._q1 = true; bus.emit("AdVideoFirstQuartile"); }
+        if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
+        if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
+      };
+      vid.onended = function() { bus.emit("AdVideoComplete"); bus.emit("AdStopped"); };
+    } catch(e) {}
   }
 
   function muteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-16.73-16.73zM12 4L9.91 6.09 12 8.18V4z"/></svg>'; }
