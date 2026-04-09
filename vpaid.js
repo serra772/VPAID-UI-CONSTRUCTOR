@@ -268,7 +268,11 @@
     try { vid.muted = false; } catch(e) {}
     try { vid.playsInline = true; } catch(e) {}
     try { vid.setAttribute("playsinline",""); } catch(e) {}
-    if (vid.style) vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+    try { 
+      if (vid.style) {
+        vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+      }
+    } catch(e) {}
 
     // Only append if it's our own element (external videoSlot may already be in the DOM)
     if (!isExternalSlot || !vid.parentNode) {
@@ -282,7 +286,7 @@
       try { vid.autoplay = true; } catch(e) {}
     } else {
       try { vid.autoplay = false; } catch(e) {}
-      setTimeout(function() { if (vid.play) vid.play().catch(function(){}); }, autoDelay);
+      setTimeout(function() { try { if (vid.play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){} }, autoDelay);
     }
 
     // --- Play/Pause Control (optional) ---
@@ -293,11 +297,11 @@
       playBtn.onclick = function(e) {
         e.stopPropagation();
         if (vid.paused) {
-          if (vid.play) vid.play();
+          try { if (vid.play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){}
           playBtn.innerHTML = pauseIcon();
           bus.emit("AdPlaying");
         } else {
-          if (vid.pause) vid.pause();
+          try { if (vid.pause) vid.pause(); } catch(e){}
           playBtn.innerHTML = playIcon();
           bus.emit("AdPaused");
         }
@@ -660,8 +664,8 @@
     },
 
     skipAd: function() { fireTracking("skip"); bus.emit("AdSkipped"); },
-    pauseAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.pause(); bus.emit("AdPaused"); },
-    resumeAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.play(); bus.emit("AdPlaying"); },
+    pauseAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); try { if(v) v.pause(); } catch(e){} bus.emit("AdPaused"); },
+    resumeAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); try { if(v) { var p = v.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){} bus.emit("AdPlaying"); },
     resizeAd: function(w, h, viewMode) { this._width = w; this._height = h; if(this.scaler) this.scaler.update(w, h); bus.emit("AdSizeChange"); },
     expandAd: function() { bus.emit("AdExpandedChange"); },
     collapseAd: function() { bus.emit("AdExpandedChange"); },
