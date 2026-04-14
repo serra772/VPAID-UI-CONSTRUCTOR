@@ -9,7 +9,7 @@
   "adWidth": 1280,
   "adHeight": 720,
   "settings": {
-    "clickThroughUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+    "clickThroughUrl": "https://example.comhttps://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
     "adDuration": 30,
     "impressionTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
     "clickTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
@@ -17,9 +17,9 @@
     "errorTracker": ""
   },
   "assets": {
-    "background": "https://serra772.github.io/VPAID-selector/molped_bg.jpg",
+    "background": "https://static.kimberlite.io/upload/molped/molped_bg.jpg",
     "bgColor": "#000000",
-    "videoUrl": "https://serra772.github.io/VPAID-selector/molped_vid_25.mp4"
+    "videoUrl": "https://static.kimberlite.io/upload/molped/molped_vid_25.mp4"
   },
   "components": [
     {
@@ -31,8 +31,8 @@
         "h": 403
       },
       "props": {
-        "videoUrl": "https://serra772.github.io/VPAID-selector/molped_vid_25.mp4",
-        "videoClickUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+        "videoUrl": "https://static.kimberlite.io/upload/molped/molped_vid_25.mp4",
+        "videoClickUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
         "autoplayDelayMs": 0,
         "showPlayControl": false,
         "showSoundControl": false
@@ -48,9 +48,9 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
-        "bgImage": "https://serra772.github.io/VPAID-selector/molped_frame.png",
+        "bgImage": "https://static.kimberlite.io/upload/molped/molped_frame.png",
         "textColor": "#ffffff",
         "fontSize": "16px",
         "borderRadius": "8px"
@@ -66,9 +66,9 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
-        "bgImage": "https://serra772.github.io/VPAID-selector/mascot_2.png",
+        "bgImage": "https://static.kimberlite.io/upload/molped/mascot_2.png",
         "textColor": "#ffffff",
         "fontSize": "16px",
         "borderRadius": "8px"
@@ -84,11 +84,11 @@
       },
       "props": {
         "images": [
-          "https://serra772.github.io/VPAID-selector/molped_card_1.png",
-          "https://serra772.github.io/VPAID-selector/molped_card_2.png",
-          "https://serra772.github.io/VPAID-selector/molped_card_3.png",
-          "https://serra772.github.io/VPAID-selector/molped_card_4.png",
-          "https://serra772.github.io/VPAID-selector/molped_card_5.png"
+          "https://static.kimberlite.io/upload/molped/molped_card_1.png",
+          "https://static.kimberlite.io/upload/molped/molped_card_2.png",
+          "https://static.kimberlite.io/upload/molped/molped_card_3.png",
+          "https://static.kimberlite.io/upload/molped/molped_card_4.png",
+          "https://static.kimberlite.io/upload/molped/molped_card_5.png"
         ],
         "dotImages": [
           "",
@@ -98,11 +98,11 @@
           ""
         ],
         "clickUrls": [
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026"
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
+          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026"
         ],
         "slideInterval": 5
       }
@@ -117,8 +117,8 @@
       },
       "props": {
         "orientation": "horizontal",
-        "prevArrowImg": "https://serra772.github.io/VPAID-selector/molped_arrow_left.png",
-        "nextArrowImg": "https://serra772.github.io/VPAID-selector/molped_arrow_right.png",
+        "prevArrowImg": "https://static.kimberlite.io/upload/molped/molped_arrow_left.png",
+        "nextArrowImg": "https://static.kimberlite.io/upload/molped/molped_arrow_right.png",
         "activeDotBorderImg": "",
         "dotColor": "#ed008b",
         "dotActiveColor": "#41b630",
@@ -142,9 +142,9 @@
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622_molped_ultra_feb_apr_2026",
+        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
         "bgColor": "#e94560",
-        "bgImage": "https://serra772.github.io/VPAID-selector/molped_btn1.png",
+        "bgImage": "https://static.kimberlite.io/upload/molped/molped_btn1.png",
         "textColor": "#ffffff",
         "fontSize": "16px",
         "borderRadius": "8px"
@@ -206,18 +206,8 @@
     root.style.height = "720px";
     root.style.background = CONFIG.assets.bgColor || "#000";
 
-    var clickUrl = CONFIG.settings.clickThroughUrl;
-
-    // Background image
-    var bg = null;
-    if (CONFIG.assets.background) {
-      bg = document.createElement("div");
-      var bgPE = clickUrl ? "auto" : "none";
-      bg.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('" + CONFIG.assets.background + "');background-size:cover;background-position:center;pointer-events:" + bgPE + ";z-index:0;";
-      root.appendChild(bg);
-    }
-
     // Background click → click-through
+    var clickUrl = CONFIG.settings.clickThroughUrl;
     if (clickUrl) {
       root.style.cursor = "pointer";
       root.onclick = function(e) {
@@ -226,6 +216,14 @@
           bus.emit("AdClickThru", clickUrl, null, true);
         }
       };
+    }
+
+    // Background image
+    if (CONFIG.assets.background) {
+      var bg = document.createElement("div");
+      var bgPE = clickUrl ? "auto" : "none";
+      bg.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('" + CONFIG.assets.background + "');background-size:cover;background-position:center;pointer-events:" + bgPE + ";z-index:0;";
+      root.appendChild(bg);
     }
 
 
@@ -259,35 +257,19 @@
     var videoClickUrl = comp.props.videoClickUrl || CONFIG.settings.clickThroughUrl;
     el.onclick = function(e) { e.stopPropagation(); if (videoClickUrl) window.open(videoClickUrl, "_blank"); bus.emit("AdClickThru", videoClickUrl, null, true); };
 
-    // Use provided videoSlot or create inline
-    var isExternalSlot = !!videoSlot;
-    var vid = videoSlot || document.createElement("video");
-
-    // Guard all property assignments — in prod the videoSlot may be a wrapper without standard HTMLVideoElement API
-    try { vid.src = url; } catch(e) {}
-    try { vid.muted = false; } catch(e) {}
-    try { vid.playsInline = true; } catch(e) {}
-    try { vid.setAttribute("playsinline",""); } catch(e) {}
-    try { 
-      if (vid.style) {
-        vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
-      }
-    } catch(e) {}
-
-    // Only append if it's our own element (external videoSlot may already be in the DOM)
-    if (!isExternalSlot || !vid.parentNode) {
-      try { el.appendChild(vid); } catch(e) {}
-    }
-
-    // Autoplay after delay
-    var autoDelay = parseInt(comp.props.autoplayDelayMs, 10);
-    if (isNaN(autoDelay)) autoDelay = 0;
-    if (autoDelay <= 0) {
-      try { vid.autoplay = true; } catch(e) {}
+    // Use provided videoSlot only if it's a real HTML element with .style
+    var vid;
+    if (videoSlot && videoSlot.style && videoSlot.tagName) {
+      vid = videoSlot;
     } else {
-      try { vid.autoplay = false; } catch(e) {}
-      setTimeout(function() { try { if (vid.play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){} }, autoDelay);
+      vid = document.createElement("video");
     }
+    vid.src = url;
+    vid.muted = false; vid.loop = false; vid.playsInline = true;
+    if (vid.setAttribute) vid.setAttribute("playsinline","");
+    vid.autoplay = false;
+    if (vid.style) vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+    el.appendChild(vid);
 
     // --- Play/Pause Control (optional) ---
     if (comp.props.showPlayControl) {
@@ -297,17 +279,18 @@
       playBtn.onclick = function(e) {
         e.stopPropagation();
         if (vid.paused) {
-          try { if (vid.play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){}
+          vid.play();
           playBtn.innerHTML = pauseIcon();
           bus.emit("AdPlaying");
         } else {
-          try { if (vid.pause) vid.pause(); } catch(e){}
+          vid.pause();
           playBtn.innerHTML = playIcon();
           bus.emit("AdPaused");
         }
       };
       el.appendChild(playBtn);
       
+      // Update the timeout to reference playBtn safely
       if (autoDelay > 0) {
         setTimeout(function() { if (typeof playBtn !== 'undefined') playBtn.innerHTML = pauseIcon(); }, autoDelay);
       }
@@ -315,10 +298,12 @@
 
     // --- Sound Controls (optional) ---
     if (comp.props.showSoundControl) {
+      // --- Volume controls container (bottom-right) ---
       var volWrap = document.createElement("div");
       volWrap.style.cssText = "position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:4px;z-index:20;";
       el.appendChild(volWrap);
 
+      // Volume slider panel (hidden by default)
       var volPanel = document.createElement("div");
       volPanel.style.cssText = "display:none;align-items:center;background:rgba(0,0,0,0.7);border-radius:14px;padding:4px 8px;height:28px;";
       volWrap.appendChild(volPanel);
@@ -330,12 +315,14 @@
       volSlider.oninput = function(e) {
         e.stopPropagation();
         var v = parseInt(volSlider.value, 10) / 100;
-        try { vid.volume = v; vid.muted = (v === 0); } catch(ex) {}
+        vid.volume = v;
+        vid.muted = (v === 0);
         soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
         bus.emit("AdVolumeChange");
       };
       volPanel.appendChild(volSlider);
 
+      // Volume toggle button (shows/hides slider)
       var volToggle = document.createElement("div");
       volToggle.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
       volToggle.innerHTML = volIcon();
@@ -343,37 +330,33 @@
         e.stopPropagation();
         var isHidden = volPanel.style.display === "none";
         volPanel.style.display = isHidden ? "flex" : "none";
-        try { volSlider.value = String(Math.round(vid.volume * 100)); } catch(ex) {}
+        volSlider.value = String(Math.round(vid.volume * 100));
       };
       volWrap.appendChild(volToggle);
 
+      // Sound mute/unmute button
       var soundBtn = document.createElement("div");
       soundBtn.style.cssText = "width:28px;height:28px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;";
       soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
       soundBtn.onclick = function(e) {
         e.stopPropagation();
-        try {
-          vid.muted = !vid.muted;
-          if (!vid.muted && vid.volume === 0) { vid.volume = 0.5; }
-        } catch(ex) {}
+        vid.muted = !vid.muted;
+        if (!vid.muted && vid.volume === 0) { vid.volume = 0.5; }
         soundBtn.innerHTML = vid.muted ? muteIcon() : unmuteIcon();
-        try { volSlider.value = String(Math.round((vid.muted ? 0 : vid.volume) * 100)); } catch(ex) {}
+        volSlider.value = String(Math.round((vid.muted ? 0 : vid.volume) * 100));
         bus.emit("AdVolumeChange");
       };
       volWrap.appendChild(soundBtn);
     }
 
-    // Event handlers — use try/catch in case vid doesn't support them
-    try {
-      vid.onloadedmetadata = function() { bus.emit("AdDurationChange"); };
-      vid.ontimeupdate = function() {
-        var pct = vid.currentTime / vid.duration;
-        if (pct >= 0.25 && !vid._q1) { vid._q1 = true; bus.emit("AdVideoFirstQuartile"); }
-        if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
-        if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
-      };
-      vid.onended = function() { bus.emit("AdVideoComplete"); bus.emit("AdStopped"); };
-    } catch(e) {}
+    vid.onloadedmetadata = function() { bus.emit("AdDurationChange"); };
+    vid.ontimeupdate = function() {
+      var pct = vid.currentTime / vid.duration;
+      if (pct >= 0.25 && !vid._q1) { vid._q1 = true; bus.emit("AdVideoFirstQuartile"); }
+      if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
+      if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
+    };
+    vid.onended = function() { bus.emit("AdVideoComplete"); vpaid.stopAd(); };
   }
 
   function muteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-16.73-16.73zM12 4L9.91 6.09 12 8.18V4z"/></svg>'; }
@@ -654,6 +637,9 @@
       bus.emit("AdImpression");
       bus.emit("AdStarted");
       bus.emit("AdVideoStart");
+      // Start video playback on startAd
+      var v = this.scaler && this.scaler.wrapper.querySelector("video");
+      if (v) v.play().catch(function(){});
     },
 
     stopAd: function() {
@@ -664,8 +650,8 @@
     },
 
     skipAd: function() { fireTracking("skip"); bus.emit("AdSkipped"); },
-    pauseAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); try { if(v) v.pause(); } catch(e){} bus.emit("AdPaused"); },
-    resumeAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); try { if(v) { var p = v.play(); if (p && p.catch) p.catch(function(){}); } } catch(e){} bus.emit("AdPlaying"); },
+    pauseAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.pause(); bus.emit("AdPaused"); },
+    resumeAd: function() { var v = this.scaler && this.scaler.wrapper.querySelector("video"); if(v) v.play(); bus.emit("AdPlaying"); },
     resizeAd: function(w, h, viewMode) { this._width = w; this._height = h; if(this.scaler) this.scaler.update(w, h); bus.emit("AdSizeChange"); },
     expandAd: function() { bus.emit("AdExpandedChange"); },
     collapseAd: function() { bus.emit("AdExpandedChange"); },
