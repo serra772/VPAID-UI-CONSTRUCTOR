@@ -1,131 +1,85 @@
 /**
  * Generated VPAID 2.0 Creative
- * Project: Molped
- * Generated: 2026-03-18T10:29:08.561Z
+ * Project: Tenet
+ * Generated: 2026-05-17T07:32:45.605Z
  */
 (function() {
   "use strict";
   var CONFIG = {
-  "adWidth": 1280,
-  "adHeight": 720,
+  "adWidth": 240,
+  "adHeight": 400,
   "settings": {
-    "clickThroughUrl": "https://example.comhttps://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-    "adDuration": 30,
-    "impressionTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
-    "clickTracker": "https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/",
-    "trackingTemplate": "",
+    "clickThroughUrl": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+    "adDuration": 60,
+    "impressionTracker": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=display&c=19&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&pcp=$${%SITEID%}$$",
+    "clickTracker": "",
+    "trackingTemplate": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=display&c=19&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&pcp=$${%SITEID%}$$",
     "errorTracker": ""
   },
   "assets": {
-    "background": "https://static.kimberlite.io/upload/molped/molped_bg.jpg",
-    "bgColor": "#000000",
-    "videoUrl": "https://static.kimberlite.io/upload/molped/molped_vid_25.mp4"
+    "background": "",
+    "bgColor": "#ffffff",
+    "videoUrl": ""
   },
   "components": [
     {
-      "type": "videoWindow",
-      "rect": {
-        "x": 46,
-        "y": 241,
-        "w": 715,
-        "h": 403
-      },
-      "props": {
-        "videoUrl": "https://static.kimberlite.io/upload/molped/molped_vid_25.mp4",
-        "videoClickUrl": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-        "autoplayDelayMs": 0,
-        "showPlayControl": false,
-        "showSoundControl": false
-      }
-    },
-    {
-      "type": "ctaButton",
-      "rect": {
-        "x": 46,
-        "y": 85,
-        "w": 717,
-        "h": 100
-      },
-      "props": {
-        "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-        "bgColor": "#e94560",
-        "bgImage": "https://static.kimberlite.io/upload/molped/molped_frame.png",
-        "textColor": "#ffffff",
-        "fontSize": "16px",
-        "borderRadius": "8px"
-      }
-    },
-    {
-      "type": "ctaButton",
-      "rect": {
-        "x": 1122,
-        "y": 413,
-        "w": 120,
-        "h": 161
-      },
-      "props": {
-        "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-        "bgColor": "#e94560",
-        "bgImage": "https://static.kimberlite.io/upload/molped/mascot_2.png",
-        "textColor": "#ffffff",
-        "fontSize": "16px",
-        "borderRadius": "8px"
-      }
-    },
-    {
       "type": "productCarousel",
       "rect": {
-        "x": 819,
-        "y": 84,
-        "w": 370,
-        "h": 456
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 400
       },
       "props": {
         "images": [
-          "https://static.kimberlite.io/upload/molped/molped_card_1.png",
-          "https://static.kimberlite.io/upload/molped/molped_card_2.png",
-          "https://static.kimberlite.io/upload/molped/molped_card_3.png",
-          "https://static.kimberlite.io/upload/molped/molped_card_4.png",
-          "https://static.kimberlite.io/upload/molped/molped_card_5.png"
+          "https://serra772.github.io/VPAID-selector/tenet_blue_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_grey_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_green_im_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_green_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_black_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_white_f1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_silver_f1.png"
         ],
         "dotImages": [
-          "",
-          "",
-          "",
-          "",
-          ""
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_blue.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_grey_tech.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_green_im.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_green.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_black.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_white.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_silver.png"
         ],
         "clickUrls": [
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-          "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026"
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$"
         ],
-        "slideInterval": 5
+        "slideInterval": "8"
       }
     },
     {
       "type": "carouselNav",
       "rect": {
-        "x": 819,
-        "y": 554,
-        "w": 371,
-        "h": 51
+        "x": 18,
+        "y": 297,
+        "w": 206,
+        "h": 26
       },
       "props": {
         "orientation": "horizontal",
-        "prevArrowImg": "https://static.kimberlite.io/upload/molped/molped_arrow_left.png",
-        "nextArrowImg": "https://static.kimberlite.io/upload/molped/molped_arrow_right.png",
+        "prevArrowImg": "https://serra772.github.io/VPAID-selector/tenet_arrow_left.png",
+        "nextArrowImg": "https://serra772.github.io/VPAID-selector/tenet_arrow_right.png",
         "activeDotBorderImg": "",
-        "dotColor": "#ed008b",
-        "dotActiveColor": "#41b630",
-        "dotSize": 8,
-        "dotGap": 4,
-        "arrowGap": 8,
-        "borderDiameter": "1",
+        "dotColor": "#ffffff",
+        "dotActiveColor": "#000000",
+        "dotSize": "8",
+        "dotGap": "10",
+        "arrowGap": "9",
+        "borderDiameter": 0,
         "borderOffsetX": 0,
         "borderOffsetY": 0,
         "arrowColor": "#ffffff",
@@ -135,36 +89,37 @@
     {
       "type": "ctaButton",
       "rect": {
-        "x": 877,
-        "y": 622,
-        "w": 263,
-        "h": 49
+        "x": 39,
+        "y": 295,
+        "w": 158,
+        "h": 31
       },
       "props": {
         "text": "",
-        "url": "https://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_2VfnxxeDtmF&utm_campaign=vendor_org_2097622​_molped_ultra_feb_apr_2026",
-        "bgColor": "#e94560",
-        "bgImage": "https://static.kimberlite.io/upload/molped/molped_btn1.png",
+        "url": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+        "bgColor": "#ffffff",
+        "bgImage": "",
         "textColor": "#ffffff",
         "fontSize": "16px",
         "borderRadius": "8px"
       }
     },
     {
-      "type": "legalText",
+      "type": "ctaButton",
       "rect": {
-        "x": 822,
-        "y": 683,
-        "w": 400,
-        "h": 22
+        "x": 63,
+        "y": 335,
+        "w": 110,
+        "h": 20
       },
       "props": {
-        "text": "Реклама. Рекламодатель: ООО «Хаят Маркетинг». ИНН: 2315170296",
-        "style": {
-          "color": "#000000",
-          "fontSize": "10px",
-          "fontFamily": "Arial"
-        }
+        "text": "",
+        "url": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
+        "bgColor": "#e94560",
+        "bgImage": "https://serra772.github.io/VPAID-selector/tenet_button.png",
+        "textColor": "#ffffff",
+        "fontSize": "16px",
+        "borderRadius": "8px"
       }
     }
   ]
@@ -184,16 +139,16 @@
 
   /* ---- Scaler ---- */
   function createScaler(slot, w, h) {
-    var scale = Math.min(w / 1280, h / 720);
-    var top = Math.max(0, Math.floor((h - 720 * scale) / 2));
-    var left = Math.max(0, Math.floor((w - 1280 * scale) / 2));
+    var scale = Math.min(w / 240, h / 400);
+    var top = 0;
+    var left = 0;
     var wrapper = document.createElement("div");
-    wrapper.style.cssText = "width:1280px;height:720px;position:absolute;top:" + top + "px;left:" + left + "px;transform:scale(" + scale + ");transform-origin:top left;overflow:hidden;font-family:sans-serif;";
+    wrapper.style.cssText = "width:240px;height:400px;position:absolute;top:" + top + "px;left:" + left + "px;transform:scale(" + scale + ");transform-origin:top left;overflow:hidden;font-family:sans-serif;";
     slot.appendChild(wrapper);
     return { wrapper: wrapper, scale: scale, update: function(nw, nh) {
-      scale = Math.min(nw / 1280, nh / 720);
-      top = Math.max(0, Math.floor((nh - 720 * scale) / 2));
-      left = Math.max(0, Math.floor((nw - 1280 * scale) / 2));
+      scale = Math.min(nw / 240, nh / 400);
+      var top = 0;
+      var left = 0;
       wrapper.style.transform = "scale(" + scale + ")";
       wrapper.style.top = top + "px"; wrapper.style.left = left + "px";
     }};
@@ -202,8 +157,8 @@
   /* ---- Render Components ---- */
   function renderCreative(root, videoSlot) {
     root.style.position = "relative";
-    root.style.width = "1280px";
-    root.style.height = "720px";
+    root.style.width = "240px";
+    root.style.height = "400px";
     root.style.background = CONFIG.assets.bgColor || "#000";
 
     // Background click → click-through
@@ -240,7 +195,6 @@
         el.style.zIndex = "15";
         renderCarouselNav(el, comp);
       } else if (comp.type === "ctaButton") {
-        el.style.zIndex = "20";
         renderCTA(el, comp);
       } else if (comp.type === "legalText") {
         renderLegal(el, comp);
@@ -257,19 +211,23 @@
     var videoClickUrl = comp.props.videoClickUrl || CONFIG.settings.clickThroughUrl;
     el.onclick = function(e) { e.stopPropagation(); if (videoClickUrl) window.open(videoClickUrl, "_blank"); bus.emit("AdClickThru", videoClickUrl, null, true); };
 
-    // Use provided videoSlot only if it's a real HTML element with .style
-    var vid;
-    if (videoSlot && videoSlot.style && videoSlot.tagName) {
-      vid = videoSlot;
-    } else {
-      vid = document.createElement("video");
-    }
+    // Use provided videoSlot or create inline
+    var vid = videoSlot || document.createElement("video");
     vid.src = url;
-    vid.muted = false; vid.loop = false; vid.playsInline = true;
-    if (vid.setAttribute) vid.setAttribute("playsinline","");
-    vid.autoplay = false;
-    if (vid.style) vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
+    vid.muted = false; vid.loop = true; vid.playsInline = true;
+    vid.setAttribute("playsinline","");
+    vid.style.cssText = "width:100%;height:100%;object-fit:cover;";
     el.appendChild(vid);
+
+    // Autoplay after delay
+    var autoDelay = parseInt(comp.props.autoplayDelayMs, 10);
+    if (isNaN(autoDelay)) autoDelay = 0; // Default to 0 now
+    if (autoDelay <= 0) {
+      vid.autoplay = true;
+    } else {
+      vid.autoplay = false;
+      setTimeout(function() { vid.play().catch(function(){}); }, autoDelay);
+    }
 
     // --- Play/Pause Control (optional) ---
     if (comp.props.showPlayControl) {
@@ -356,7 +314,7 @@
       if (pct >= 0.50 && !vid._q2) { vid._q2 = true; bus.emit("AdVideoMidpoint"); }
       if (pct >= 0.75 && !vid._q3) { vid._q3 = true; bus.emit("AdVideoThirdQuartile"); }
     };
-    vid.onended = function() { bus.emit("AdVideoComplete"); vpaid.stopAd(); };
+    vid.onended = function() { bus.emit("AdVideoComplete"); };
   }
 
   function muteIcon() { return '<svg viewBox="0 0 24 24" fill="#fff" style="width:16px;height:16px"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-16.73-16.73zM12 4L9.91 6.09 12 8.18V4z"/></svg>'; }
@@ -371,7 +329,7 @@
     el.style.position = "relative";
     el.style.overflow = "hidden";
     var track = document.createElement("div");
-    track.style.cssText = "display:flex;flex-direction:row;transition:transform 0.4s ease;width:100%;height:100%;";
+    track.style.cssText = "display:flex;flex-direction:column;width:100%;height:100%;";
     var idx = 0;
     imgs.forEach(function(src, i) {
       var slide = document.createElement("div");
@@ -423,7 +381,7 @@
 
     function goTo(i) {
       idx = ((i % imgs.length) + imgs.length) % imgs.length;
-      track.style.transform = "translateX(-" + (idx * 100) + "%)";
+      track.style.transform = "translateY(-" + (idx * 100) + "%)";
       // Update external nav dots if present
       if (_carouselGoTo && _carouselGoTo._updateDots) _carouselGoTo._updateDots(idx);
       bus.emit("AdInteraction", "carousel:" + idx);
@@ -637,9 +595,11 @@
       bus.emit("AdImpression");
       bus.emit("AdStarted");
       bus.emit("AdVideoStart");
-      // Start video playback on startAd
-      var v = this.scaler && this.scaler.wrapper.querySelector("video");
-      if (v) v.play().catch(function(){});
+
+      var self = this;
+      setTimeout(function() {
+        self.stopAd();
+      }, 60000);
     },
 
     stopAd: function() {
