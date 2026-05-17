@@ -3,18 +3,18 @@
   <Ad id="5502027">
     <InLine>
       <AdSystem version="1.0">VPAID Constructor</AdSystem>
-      <AdTitle>Molped</AdTitle>
+      <AdTitle>Tenet</AdTitle>
       <Description><![CDATA[Generated VPAID Custom Ad]]></Description>
       <Error><![CDATA[]]></Error>
-      <Impression><![CDATA[https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/]]></Impression>
+      <Impression><![CDATA[https://bs.serving-sys.ru/Serving/adServer.bs?cn=display&c=19&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&pcp=$${%SITEID%}$$]]></Impression>
       <Creatives>
         <Creative>
           <Linear>
-            <Duration>00:00:30</Duration>
+            <Duration>00:01:00</Duration>
             <AdParameters xmlEncoded="0"/>
             <VideoClicks>
-              <ClickThrough><![CDATA[https://example.comhttps://www.ozon.ru/brand/molped-87167271/?utm_source=solta_shoppable_olv&utm_medium=cpm&utm_content=token_&utm_campaign=vendor_org_2097622 _molped_ultra_feb_apr_2026]]></ClickThrough>
-              <ClickTracking><![CDATA[https://www.tns-counter.ru/V13a****bbdo_ad/ru/UTF-8/tmsec=bbdo_cid1309134-posid3642292/]]></ClickTracking>
+              <ClickThrough><![CDATA[https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$]]></ClickThrough>
+              <ClickTracking><![CDATA[]]></ClickTracking>
             </VideoClicks>
             <MediaFiles>
               <MediaFile delivery="progressive" width="16" height="9" apiFramework="VPAID" type="application/javascript">
