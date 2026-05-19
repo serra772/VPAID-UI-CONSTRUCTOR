@@ -1,7 +1,7 @@
 /**
  * Generated VPAID 2.0 Creative
  * Project: Tenet
- * Generated: 2026-05-17T07:32:45.605Z
+ * Generated: 2026-05-19T12:56:04.443Z
  */
 (function() {
   "use strict";
@@ -32,27 +32,18 @@
       },
       "props": {
         "images": [
-          "https://serra772.github.io/VPAID-selector/tenet_blue_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_grey_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_green_im_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_green_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_black_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_white_f1.png",
-          "https://serra772.github.io/VPAID-selector/tenet_silver_f1.png"
+          "https://serra772.github.io/VPAID-selector/tenet_black_240_400_1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_white_240_400_1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_grey_240_400_1.png",
+          "https://serra772.github.io/VPAID-selector/tenet_green_240_400_1.png"
         ],
         "dotImages": [
-          "https://serra772.github.io/VPAID-selector/tenet_eclipse_blue.png",
-          "https://serra772.github.io/VPAID-selector/tenet_eclipse_grey_tech.png",
-          "https://serra772.github.io/VPAID-selector/tenet_eclipse_green_im.png",
-          "https://serra772.github.io/VPAID-selector/tenet_eclipse_green.png",
           "https://serra772.github.io/VPAID-selector/tenet_eclipse_black.png",
           "https://serra772.github.io/VPAID-selector/tenet_eclipse_white.png",
-          "https://serra772.github.io/VPAID-selector/tenet_eclipse_silver.png"
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_grey_tech.png",
+          "https://serra772.github.io/VPAID-selector/tenet_eclipse_green_im.png"
         ],
         "clickUrls": [
-          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
-          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
-          "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
           "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
           "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
           "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
@@ -64,10 +55,10 @@
     {
       "type": "carouselNav",
       "rect": {
-        "x": 18,
-        "y": 297,
-        "w": 206,
-        "h": 26
+        "x": 47,
+        "y": 263,
+        "w": 148,
+        "h": 31
       },
       "props": {
         "orientation": "horizontal",
@@ -89,34 +80,16 @@
     {
       "type": "ctaButton",
       "rect": {
-        "x": 39,
-        "y": 295,
-        "w": 158,
-        "h": 31
+        "x": 75,
+        "y": 264,
+        "w": 89,
+        "h": 28
       },
       "props": {
         "text": "",
         "url": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
         "bgColor": "#ffffff",
         "bgImage": "",
-        "textColor": "#ffffff",
-        "fontSize": "16px",
-        "borderRadius": "8px"
-      }
-    },
-    {
-      "type": "ctaButton",
-      "rect": {
-        "x": 63,
-        "y": 335,
-        "w": 110,
-        "h": 20
-      },
-      "props": {
-        "text": "",
-        "url": "https://bs.serving-sys.ru/Serving/adServer.bs?cn=trd&pli=1090345141&adid=1090345142&ord={%CACHEBUSTER%}&LineID=$$utm_term={%SITEID%}&erid=2VfnxwU13Y6$$",
-        "bgColor": "#e94560",
-        "bgImage": "https://serra772.github.io/VPAID-selector/tenet_button.png",
         "textColor": "#ffffff",
         "fontSize": "16px",
         "borderRadius": "8px"
@@ -147,10 +120,8 @@
     slot.appendChild(wrapper);
     return { wrapper: wrapper, scale: scale, update: function(nw, nh) {
       scale = Math.min(nw / 240, nh / 400);
-      var top = 0;
-      var left = 0;
       wrapper.style.transform = "scale(" + scale + ")";
-      wrapper.style.top = top + "px"; wrapper.style.left = left + "px";
+      wrapper.style.top = "0px"; wrapper.style.left = "0px";
     }};
   }
 
